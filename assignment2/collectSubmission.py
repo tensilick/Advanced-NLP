@@ -14,4 +14,7 @@ fail = 0
 counter = 0
 testcases = []
 
-from f
+from functools import wraps
+import traceback
+
+def p
