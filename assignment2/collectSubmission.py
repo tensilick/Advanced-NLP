@@ -19,4 +19,7 @@ import traceback
 
 def prompt(msg):
     yn = raw_input(msg + " [y/n]: ")
-    return yn.lo
+    return yn.lower().startswith('y')
+
+class testcase(object):
+    d
