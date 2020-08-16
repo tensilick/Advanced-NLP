@@ -5,4 +5,7 @@ import glob, shutil
 import time
 
 
-####
+################
+# Sanity check #
+################
+import numpy 
