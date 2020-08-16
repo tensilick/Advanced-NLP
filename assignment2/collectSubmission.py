@@ -17,4 +17,6 @@ testcases = []
 from functools import wraps
 import traceback
 
-def p
+def prompt(msg):
+    yn = raw_input(msg + " [y/n]: ")
+    return yn.lo
