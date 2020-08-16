@@ -8,4 +8,10 @@ import time
 ################
 # Sanity check #
 ################
-import numpy 
+import numpy as np
+
+fail = 0
+counter = 0
+testcases = []
+
+from f
