@@ -22,4 +22,7 @@ def prompt(msg):
     return yn.lower().startswith('y')
 
 class testcase(object):
-    d
+    def __init__(self, name):
+        self.name = name
+
+  
