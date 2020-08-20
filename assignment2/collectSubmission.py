@@ -25,4 +25,5 @@ class testcase(object):
     def __init__(self, name):
         self.name = name
 
-  
+    def __call__(self, func):
+        global testcases
