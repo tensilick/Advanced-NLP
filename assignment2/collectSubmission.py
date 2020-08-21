@@ -27,3 +27,6 @@ class testcase(object):
 
     def __call__(self, func):
         global testcases
+
+        @wraps(func)
+        def wrapper()
