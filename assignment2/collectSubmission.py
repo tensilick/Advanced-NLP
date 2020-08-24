@@ -29,4 +29,7 @@ class testcase(object):
         global testcases
 
         @wraps(func)
-        def wrapper()
+        def wrapper():
+            global counter
+            global fail
+     
