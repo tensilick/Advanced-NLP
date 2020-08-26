@@ -36,4 +36,5 @@ class testcase(object):
             print ">> Test %d (%s)" % (counter, self.name)
             try:
                 func()
-                print "[ok] Passed test %
+                print "[ok] Passed test %d (%s)" % (counter, self.name)
+            except Exc
