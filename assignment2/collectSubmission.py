@@ -35,4 +35,5 @@ class testcase(object):
             counter += 1
             print ">> Test %d (%s)" % (counter, self.name)
             try:
-     
+                func()
+                print "[ok] Passed test %
