@@ -32,4 +32,5 @@ class testcase(object):
         def wrapper():
             global counter
             global fail
-     
+            counter += 1
+            print ">> Te
