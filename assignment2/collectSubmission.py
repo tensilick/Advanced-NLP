@@ -33,4 +33,6 @@ class testcase(object):
             global counter
             global fail
             counter += 1
-            print ">> Te
+            print ">> Test %d (%s)" % (counter, self.name)
+            try:
+     
