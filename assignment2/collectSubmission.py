@@ -50,4 +50,5 @@ class testcase(object):
 
 ##
 # Part 1
-@testcase("Part1: t
+@testcase("Part1: test random_weight_matrix")
+def test_random
