@@ -41,3 +41,6 @@ class testcase(object):
                 fail += 1
                 print "[!!] Error on test %d (%s):" % (counter, self.name)
                 traceback.print_exc()
+
+        testcases.append(wrapper)
+        return w
