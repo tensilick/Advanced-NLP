@@ -43,4 +43,11 @@ class testcase(object):
                 traceback.print_exc()
 
         testcases.append(wrapper)
-        return w
+        return wrapper
+
+##
+# Part 0
+
+##
+# Part 1
+@testcase("Part1: t
