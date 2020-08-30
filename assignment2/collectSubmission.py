@@ -51,4 +51,5 @@ class testcase(object):
 ##
 # Part 1
 @testcase("Part1: test random_weight_matrix")
-def test_random
+def test_random_weight_matrix():
+    from misc import random_w
