@@ -39,4 +39,4 @@ class testcase(object):
                 print "[ok] Passed test %d (%s)" % (counter, self.name)
             except Exception as e:
                 fail += 1
-                print "[!
+                print "[!!] Error on test %d (%s):" % (counter, self
