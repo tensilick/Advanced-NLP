@@ -54,4 +54,6 @@ class testcase(object):
 def test_random_weight_matrix():
     from misc import random_weight_matrix
     A = random_weight_matrix(100,100)
-    assert(
+    assert(A.shape == (100,100))
+
+@testcase("Part1: initialize window mo
