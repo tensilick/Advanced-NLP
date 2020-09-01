@@ -58,4 +58,6 @@ def test_random_weight_matrix():
 
 @testcase("Part1: initialize window model")
 def ner_init():
-    from nerwindow impor
+    from nerwindow import WindowMLP
+    np.random.seed(10)
+    wv = np.ran
