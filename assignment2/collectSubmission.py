@@ -60,4 +60,6 @@ def test_random_weight_matrix():
 def ner_init():
     from nerwindow import WindowMLP
     np.random.seed(10)
-    wv = np.ran
+    wv = np.random.randn(20,10)
+    clf = WindowMLP(wv, windowsize=3,
+    
