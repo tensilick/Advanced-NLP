@@ -56,4 +56,6 @@ def test_random_weight_matrix():
     A = random_weight_matrix(100,100)
     assert(A.shape == (100,100))
 
-@testcase("Part1: initialize window mo
+@testcase("Part1: initialize window model")
+def ner_init():
+    from nerwindow impor
