@@ -62,4 +62,7 @@ def ner_init():
     np.random.seed(10)
     wv = np.random.randn(20,10)
     clf = WindowMLP(wv, windowsize=3,
-                    dims = [None, 15, 3], rseed
+                    dims = [None, 15, 3], rseed=10)
+
+@testcase("Part1: test predict_proba()")
+def ner_predict_
