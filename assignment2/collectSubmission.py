@@ -65,4 +65,5 @@ def ner_init():
                     dims = [None, 15, 3], rseed=10)
 
 @testcase("Part1: test predict_proba()")
-def ner_predict_
+def ner_predict_proba():
+    from nerwindow import WindowMLP
