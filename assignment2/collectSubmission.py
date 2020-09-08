@@ -67,3 +67,6 @@ def ner_init():
 @testcase("Part1: test predict_proba()")
 def ner_predict_proba():
     from nerwindow import WindowMLP
+    np.random.seed(10)
+    wv = np.random.randn(20,10)
+    clf = W
