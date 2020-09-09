@@ -71,4 +71,5 @@ def ner_predict_proba():
     wv = np.random.randn(20,10)
     clf = WindowMLP(wv, windowsize=3,
                     dims = [None, 15, 3], rseed=10)
-    p = clf.pre
+    p = clf.predict_proba([1,2,3])
+    assert(len(p.flatten()) == 3
