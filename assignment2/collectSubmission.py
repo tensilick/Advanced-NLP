@@ -75,4 +75,6 @@ def ner_predict_proba():
     assert(len(p.flatten()) == 3)
     p = clf.predict_proba([[1,2,3], [2,3,4]])
     assert(np.ndim(p) == 2)
-    assert(p.sha
+    assert(p.shape == (2,3))
+
+@testcase("Part1: test compute_loss
