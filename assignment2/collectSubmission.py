@@ -73,4 +73,6 @@ def ner_predict_proba():
                     dims = [None, 15, 3], rseed=10)
     p = clf.predict_proba([1,2,3])
     assert(len(p.flatten()) == 3)
-    p = clf.predict_proba([[1,2,3], [2,3,
+    p = clf.predict_proba([[1,2,3], [2,3,4]])
+    assert(np.ndim(p) == 2)
+    assert(p.sha
