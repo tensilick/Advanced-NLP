@@ -77,4 +77,6 @@ def ner_predict_proba():
     assert(np.ndim(p) == 2)
     assert(p.shape == (2,3))
 
-@testcase("Part1: test compute_loss
+@testcase("Part1: test compute_loss()")
+def ner_predict_proba():
+    from nerwi
