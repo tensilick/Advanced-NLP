@@ -79,4 +79,5 @@ def ner_predict_proba():
 
 @testcase("Part1: test compute_loss()")
 def ner_predict_proba():
-    from nerwi
+    from nerwindow import WindowMLP
+    np
