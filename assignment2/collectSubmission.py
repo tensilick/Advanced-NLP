@@ -80,4 +80,5 @@ def ner_predict_proba():
 @testcase("Part1: test compute_loss()")
 def ner_predict_proba():
     from nerwindow import WindowMLP
-    np
+    np.random.seed(10)
+    wv = np.random.randn(20,1
