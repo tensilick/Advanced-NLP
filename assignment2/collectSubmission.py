@@ -81,4 +81,6 @@ def ner_predict_proba():
 def ner_predict_proba():
     from nerwindow import WindowMLP
     np.random.seed(10)
-    wv = np.random.randn(20,1
+    wv = np.random.randn(20,10)
+    clf = WindowMLP(wv, windowsize=3,
+                 
