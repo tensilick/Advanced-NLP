@@ -83,4 +83,5 @@ def ner_predict_proba():
     np.random.seed(10)
     wv = np.random.randn(20,10)
     clf = WindowMLP(wv, windowsize=3,
-                 
+                    dims = [None, 15, 3], rseed=10)
+    J = clf.c
