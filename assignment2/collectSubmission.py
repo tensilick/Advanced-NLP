@@ -84,4 +84,5 @@ def ner_predict_proba():
     wv = np.random.randn(20,10)
     clf = WindowMLP(wv, windowsize=3,
                     dims = [None, 15, 3], rseed=10)
-    J = clf.c
+    J = clf.compute_loss([1,2,3], 1)
+    print "  dummy: J = %g
