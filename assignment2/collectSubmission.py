@@ -86,4 +86,7 @@ def ner_predict_proba():
                     dims = [None, 15, 3], rseed=10)
     J = clf.compute_loss([1,2,3], 1)
     print "  dummy: J = %g" % J
-    J = clf.compute_loss([[1,2,3], [2,3,4]], [
+    J = clf.compute_loss([[1,2,3], [2,3,4]], [0,1])
+    print "  dummy: J = %g" % J
+
+@test
