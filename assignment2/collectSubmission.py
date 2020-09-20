@@ -89,4 +89,5 @@ def ner_predict_proba():
     J = clf.compute_loss([[1,2,3], [2,3,4]], [0,1])
     print "  dummy: J = %g" % J
 
-@test
+@testcase("Part1: NER prediction - dev set")
+def ner_pred_de
