@@ -90,4 +90,5 @@ def ner_predict_proba():
     print "  dummy: J = %g" % J
 
 @testcase("Part1: NER prediction - dev set")
-def ner_pred_de
+def ner_pred_dev():
+    devpred = np.loadtxt("dev.predicted", d
