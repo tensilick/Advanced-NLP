@@ -92,4 +92,6 @@ def ner_predict_proba():
 @testcase("Part1: NER prediction - dev set")
 def ner_pred_dev():
     devpred = np.loadtxt("dev.predicted", dtype=int)
-    assert(len(devpred) == 51
+    assert(len(devpred) == 51362) # dev set length
+
+@testcase("Part1: NER prediction
