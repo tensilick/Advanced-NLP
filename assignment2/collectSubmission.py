@@ -96,4 +96,5 @@ def ner_pred_dev():
 
 @testcase("Part1: NER prediction - test set")
 def ner_pred_test():
-    testp
+    testpred = np.loadtxt("test.predicted", dtype=int)
+ 
