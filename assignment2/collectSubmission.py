@@ -97,4 +97,6 @@ def ner_pred_dev():
 @testcase("Part1: NER prediction - test set")
 def ner_pred_test():
     testpred = np.loadtxt("test.predicted", dtype=int)
- 
+    assert(len(testpred) == 46435)
+
+def setu
