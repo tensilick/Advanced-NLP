@@ -99,4 +99,6 @@ def ner_pred_test():
     testpred = np.loadtxt("test.predicted", dtype=int)
     assert(len(testpred) == 46435)
 
-def setu
+def setup_probing():
+    num_to_word = dict(enumerate(
+        
