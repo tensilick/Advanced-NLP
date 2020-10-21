@@ -101,4 +101,5 @@ def ner_pred_test():
 
 def setup_probing():
     num_to_word = dict(enumerate(
-                       ["hello", "world", "i", "am", "a", "
+                       ["hello", "world", "i", "am", "a", "banana",
+                        "there", "is", "no", "s
