@@ -104,4 +104,7 @@ def setup_probing():
                        ["hello", "world", "i", "am", "a", "banana",
                         "there", "is", "no", "spoon"]))
     tagnames = ["O", "LOC", "MISC", "ORG", "PER"]
-    num_to_tag = dict(enumerate(tagnam
+    num_to_tag = dict(enumerate(tagnames))
+
+    from nerwindow import WindowMLP
+    np.
