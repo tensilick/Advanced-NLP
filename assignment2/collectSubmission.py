@@ -103,4 +103,5 @@ def setup_probing():
     num_to_word = dict(enumerate(
                        ["hello", "world", "i", "am", "a", "banana",
                         "there", "is", "no", "spoon"]))
-    tagnames = ["O", "LOC", "MISC", "OR
+    tagnames = ["O", "LOC", "MISC", "ORG", "PER"]
+    num_to_tag = dict(enumerate(tagnam
