@@ -107,4 +107,6 @@ def setup_probing():
     num_to_tag = dict(enumerate(tagnames))
 
     from nerwindow import WindowMLP
-    np.
+    np.random.seed(10)
+    wv = np.random.randn(10,50)
+    clf = W
