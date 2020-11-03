@@ -109,4 +109,5 @@ def setup_probing():
     from nerwindow import WindowMLP
     np.random.seed(10)
     wv = np.random.randn(10,50)
-    clf = W
+    clf = WindowMLP(wv, windowsize=3,
+                    dims = [N
