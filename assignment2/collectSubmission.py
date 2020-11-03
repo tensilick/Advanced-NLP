@@ -110,4 +110,5 @@ def setup_probing():
     np.random.seed(10)
     wv = np.random.randn(10,50)
     clf = WindowMLP(wv, windowsize=3,
-                    dims = [N
+                    dims = [None, 100, 5], rseed=10)
+    return cl
