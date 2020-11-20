@@ -111,4 +111,6 @@ def setup_probing():
     wv = np.random.randn(10,50)
     clf = WindowMLP(wv, windowsize=3,
                     dims = [None, 100, 5], rseed=10)
-    return cl
+    return clf, num_to_word, num_to_tag
+
+@testcase("Part1.1 (a):
