@@ -113,4 +113,6 @@ def setup_probing():
                     dims = [None, 100, 5], rseed=10)
     return clf, num_to_word, num_to_tag
 
-@testcase("Part1.1 (a):
+@testcase("Part1.1 (a): verify output format")
+def ner_probe_a():
+    f
