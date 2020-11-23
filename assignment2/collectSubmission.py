@@ -115,4 +115,5 @@ def setup_probing():
 
 @testcase("Part1.1 (a): verify output format")
 def ner_probe_a():
-    f
+    from part11probing import part_a, part_b, part_c
+ 
