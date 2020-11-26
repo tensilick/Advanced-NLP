@@ -117,4 +117,5 @@ def setup_probing():
 def ner_probe_a():
     from part11probing import part_a, part_b, part_c
     clf, num_to_word, num_to_tag = setup_probing()
-    s,w 
+    s,w = part_a(clf, num_to_word, verbose=False)
+    assert
