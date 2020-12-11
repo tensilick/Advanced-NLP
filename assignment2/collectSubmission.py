@@ -119,4 +119,5 @@ def ner_probe_a():
     clf, num_to_word, num_to_tag = setup_probing()
     s,w = part_a(clf, num_to_word, verbose=False)
     assert(len(s) == len(w))
-    if type(s) == dict: # some stud
+    if type(s) == dict: # some students may have done this
+        for k in s.keys(): as
