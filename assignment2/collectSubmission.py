@@ -120,4 +120,6 @@ def ner_probe_a():
     s,w = part_a(clf, num_to_word, verbose=False)
     assert(len(s) == len(w))
     if type(s) == dict: # some students may have done this
-        for k in s.keys(): as
+        for k in s.keys(): assert(k in w)
+        for k in w.keys(): assert(k in s)
+       
