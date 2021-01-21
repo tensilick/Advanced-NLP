@@ -124,4 +124,5 @@ def ner_probe_a():
         for k in w.keys(): assert(k in s)
         assert(len(s) >= 5)
     else: # list
-        ass
+        assert(len(s[0]) == len(w[0]))
+        assert(len(s[0]) == 10
