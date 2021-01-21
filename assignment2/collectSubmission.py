@@ -122,4 +122,6 @@ def ner_probe_a():
     if type(s) == dict: # some students may have done this
         for k in s.keys(): assert(k in w)
         for k in w.keys(): assert(k in s)
-       
+        assert(len(s) >= 5)
+    else: # list
+        ass
