@@ -125,4 +125,8 @@ def ner_probe_a():
         assert(len(s) >= 5)
     else: # list
         assert(len(s[0]) == len(w[0]))
-        assert(len(s[0]) == 10
+        assert(len(s[0]) == 10)
+        assert(type(w[0][0]) == str)
+
+
+@testcase("Part1.1
