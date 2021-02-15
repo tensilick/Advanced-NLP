@@ -129,4 +129,5 @@ def ner_probe_a():
         assert(type(w[0][0]) == str)
 
 
-@testcase("Part1.1
+@testcase("Part1.1 (b): verify output format")
+def ner_probe_b(
