@@ -132,4 +132,5 @@ def ner_probe_a():
 @testcase("Part1.1 (b): verify output format")
 def ner_probe_b():
     from part11probing import part_a, part_b, part_c
-    clf,
+    clf, num_to_word, num_to_tag = setup_probing()
+    s,w = part_b(clf,
