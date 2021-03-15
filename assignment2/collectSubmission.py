@@ -133,4 +133,5 @@ def ner_probe_a():
 def ner_probe_b():
     from part11probing import part_a, part_b, part_c
     clf, num_to_word, num_to_tag = setup_probing()
-    s,w = part_b(clf,
+    s,w = part_b(clf, num_to_word, num_to_tag, verbose=False)
+    asse
