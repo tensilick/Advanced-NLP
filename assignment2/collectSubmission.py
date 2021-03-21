@@ -137,4 +137,8 @@ def ner_probe_b():
     assert(len(s) == len(w))
     assert(len(s) == 5)
     assert(len(s[0]) == len(w[0]))
-    assert(len(s[0]) == 10
+    assert(len(s[0]) == 10)
+    assert(type(w[0][0]) == str)
+
+
+@tes
