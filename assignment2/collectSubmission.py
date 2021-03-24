@@ -141,4 +141,4 @@ def ner_probe_b():
     assert(type(w[0][0]) == str)
 
 
-@tes
+@testcase("Part1.1 (c): verify output fo
