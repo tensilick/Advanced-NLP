@@ -141,4 +141,6 @@ def ner_probe_b():
     assert(type(w[0][0]) == str)
 
 
-@testcase("Part1.1 (c): verify output fo
+@testcase("Part1.1 (c): verify output format")
+def ner_probe_b():
+    from part11probing impo
