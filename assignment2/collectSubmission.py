@@ -143,4 +143,5 @@ def ner_probe_b():
 
 @testcase("Part1.1 (c): verify output format")
 def ner_probe_b():
-    from part11probing impo
+    from part11probing import part_a, part_b, part_c
+    clf, num_to_word, num
