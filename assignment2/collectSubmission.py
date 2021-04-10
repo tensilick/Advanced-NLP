@@ -145,4 +145,6 @@ def ner_probe_b():
 def ner_probe_b():
     from part11probing import part_a, part_b, part_c
     clf, num_to_word, num_to_tag = setup_probing()
-    s,w = part_c(clf, num_to_w
+    s,w = part_c(clf, num_to_word, num_to_tag, verbose=False)
+    assert(len(s) == len(w))
+  
