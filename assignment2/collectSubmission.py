@@ -147,4 +147,5 @@ def ner_probe_b():
     clf, num_to_word, num_to_tag = setup_probing()
     s,w = part_c(clf, num_to_word, num_to_tag, verbose=False)
     assert(len(s) == len(w))
-  
+    assert(len(s) == 5)
+    assert(len(s[0]) == len(w[0])
