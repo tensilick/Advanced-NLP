@@ -156,4 +156,7 @@ def ner_probe_b():
 ##
 # Part 2
 @testcase("Part2: initialize RNNLM")
-def rnnlm_i
+def rnnlm_init():
+    from rnnlm import RNNLM
+    np.random.seed(10)
+ 
