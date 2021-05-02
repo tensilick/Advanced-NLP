@@ -159,4 +159,5 @@ def ner_probe_b():
 def rnnlm_init():
     from rnnlm import RNNLM
     np.random.seed(10)
- 
+    L = np.random.randn(50,10)
+    model = RNNLM(L0 
