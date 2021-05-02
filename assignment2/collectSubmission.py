@@ -160,4 +160,7 @@ def rnnlm_init():
     from rnnlm import RNNLM
     np.random.seed(10)
     L = np.random.randn(50,10)
-    model = RNNLM(L0 
+    model = RNNLM(L0 = L)
+
+@testcase("Part2: load RNNLM params")
+def rnnlm_l
