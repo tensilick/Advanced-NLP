@@ -163,4 +163,6 @@ def rnnlm_init():
     model = RNNLM(L0 = L)
 
 @testcase("Part2: load RNNLM params")
-def rnnlm_l
+def rnnlm_load():
+    from rnnlm import RNNLM
+    L = np.load
