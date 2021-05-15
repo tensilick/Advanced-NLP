@@ -165,4 +165,5 @@ def rnnlm_init():
 @testcase("Part2: load RNNLM params")
 def rnnlm_load():
     from rnnlm import RNNLM
-    L = np.load
+    L = np.load('rnnlm.L.npy')
+    print "  loaded L: %s" % str(L.
