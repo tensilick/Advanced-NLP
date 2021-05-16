@@ -166,4 +166,6 @@ def rnnlm_init():
 def rnnlm_load():
     from rnnlm import RNNLM
     L = np.load('rnnlm.L.npy')
-    print "  loaded L: %s" % str(L.
+    print "  loaded L: %s" % str(L.shape)
+    H = np.load('rnnlm.H.npy')
+    print "  loaded H: %s"
