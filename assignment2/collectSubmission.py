@@ -168,4 +168,5 @@ def rnnlm_load():
     L = np.load('rnnlm.L.npy')
     print "  loaded L: %s" % str(L.shape)
     H = np.load('rnnlm.H.npy')
-    print "  loaded H: %s"
+    print "  loaded H: %s" % str(H.shape)
+    U = np.load('rnnlm.U.npy'
