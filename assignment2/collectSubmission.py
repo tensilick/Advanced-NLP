@@ -173,4 +173,6 @@ def rnnlm_load():
     print "  loaded U: %s" % str(U.shape)
     assert(L.shape[0] == U.shape[0])
     assert(L.shape[1] == H.shape[1])
-    assert(H.shape[0] == U.shap
+    assert(H.shape[0] == U.shape[1])
+    model = RNNLM(L0 = L, U0 = U)
+    mode
