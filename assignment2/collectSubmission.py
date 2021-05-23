@@ -172,4 +172,5 @@ def rnnlm_load():
     U = np.load('rnnlm.U.npy')
     print "  loaded U: %s" % str(U.shape)
     assert(L.shape[0] == U.shape[0])
-    assert
+    assert(L.shape[1] == H.shape[1])
+    assert(H.shape[0] == U.shap
