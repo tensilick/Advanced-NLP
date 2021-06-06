@@ -175,4 +175,6 @@ def rnnlm_load():
     assert(L.shape[1] == H.shape[1])
     assert(H.shape[0] == U.shape[1])
     model = RNNLM(L0 = L, U0 = U)
-    mode
+    model.params.H[:] = H
+
+@testcase("Part2: test generate_seque
