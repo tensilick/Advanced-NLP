@@ -177,4 +177,6 @@ def rnnlm_load():
     model = RNNLM(L0 = L, U0 = U)
     model.params.H[:] = H
 
-@testcase("Part2: test generate_seque
+@testcase("Part2: test generate_sequence")
+def rnnlm_generate_sequence():
+    from rnnlm import R
