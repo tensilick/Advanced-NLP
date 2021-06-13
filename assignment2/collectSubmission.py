@@ -179,4 +179,6 @@ def rnnlm_load():
 
 @testcase("Part2: test generate_sequence")
 def rnnlm_generate_sequence():
-    from rnnlm import R
+    from rnnlm import RNNLM
+    np.random.seed(10)
+    L = np.ra
