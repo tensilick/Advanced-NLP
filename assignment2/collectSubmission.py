@@ -181,4 +181,5 @@ def rnnlm_load():
 def rnnlm_generate_sequence():
     from rnnlm import RNNLM
     np.random.seed(10)
-    L = np.ra
+    L = np.random.randn(20,10)
+    model = RNNLM(L0 =
