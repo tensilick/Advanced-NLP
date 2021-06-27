@@ -186,4 +186,5 @@ def rnnlm_generate_sequence():
     model.H = np.random.randn(20,20)
     s, J = model.generate_sequence(0,1, maxlen=15)
     print "dummy J: %g" % J
-    print "dummy s
+    print "dummy seq: len(s) = %d" % len(s)
+    assert(l
