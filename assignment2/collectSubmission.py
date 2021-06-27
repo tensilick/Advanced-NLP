@@ -187,4 +187,6 @@ def rnnlm_generate_sequence():
     s, J = model.generate_sequence(0,1, maxlen=15)
     print "dummy J: %g" % J
     print "dummy seq: len(s) = %d" % len(s)
-    assert(l
+    assert(len(s) <= 15+1)
+    assert(s[0] == 0)
+    assert(J > 0)
