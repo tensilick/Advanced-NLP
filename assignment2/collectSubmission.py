@@ -190,3 +190,7 @@ def rnnlm_generate_sequence():
     assert(len(s) <= 15+1)
     assert(s[0] == 0)
     assert(J > 0)
+
+##
+# Execute sanity check
+print "=== Running sanity
