@@ -195,4 +195,7 @@ def rnnlm_generate_sequence():
 # Execute sanity check
 print "=== Running sanity check ==="
 for f in testcases:
-    f(
+    f()
+
+if fail <= 0:
+    print "=== Sanity 
