@@ -198,4 +198,6 @@ for f in testcases:
     f()
 
 if fail <= 0:
-    print "=== Sanity 
+    print "=== Sanity check passed! ==="
+else:
+    print "=== Sanity check failed 
