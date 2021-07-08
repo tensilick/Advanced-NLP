@@ -201,4 +201,9 @@ if fail <= 0:
     print "=== Sanity check passed! ==="
 else:
     print "=== Sanity check failed %d tests :( ===" % fail
-    if not prompt("Continue subm
+    if not prompt("Continue submission anyway?"):
+        sys.exit(1)
+
+
+##
+# List of
