@@ -200,4 +200,5 @@ for f in testcases:
 if fail <= 0:
     print "=== Sanity check passed! ==="
 else:
-    print "=== Sanity check failed 
+    print "=== Sanity check failed %d tests :( ===" % fail
+    if not prompt("Continue subm
