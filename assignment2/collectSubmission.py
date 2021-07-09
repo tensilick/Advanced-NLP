@@ -209,4 +209,7 @@ else:
 # List of files for submission
 filelist = [
     'part0-XOR.ipynb',
-    'part1-NE
+    'part1-NER.ipynb',
+    'misc.py',
+    'nerwindow.py',
+    'ne
