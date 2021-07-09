@@ -206,4 +206,7 @@ else:
 
 
 ##
-# List of
+# List of files for submission
+filelist = [
+    'part0-XOR.ipynb',
+    'part1-NE
