@@ -213,4 +213,6 @@ filelist = [
     'misc.py',
     'nerwindow.py',
     'ner.learningcurve.best.png',
-    'ner.learningcurve
+    'ner.learningcurve.comparison.png',
+    'dev.predicted',
+    'test.predicted',
