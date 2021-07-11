@@ -212,4 +212,5 @@ filelist = [
     'part1-NER.ipynb',
     'misc.py',
     'nerwindow.py',
-    'ne
+    'ner.learningcurve.best.png',
+    'ner.learningcurve
