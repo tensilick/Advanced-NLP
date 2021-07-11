@@ -216,3 +216,5 @@ filelist = [
     'ner.learningcurve.comparison.png',
     'dev.predicted',
     'test.predicted',
+    'part11probing.py',
+    'part2-RNNLM.ipyn
