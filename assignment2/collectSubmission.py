@@ -217,4 +217,7 @@ filelist = [
     'dev.predicted',
     'test.predicted',
     'part11probing.py',
-    'part2-RNNLM.ipyn
+    'part2-RNNLM.ipynb',
+    'rnnlm.py',
+    'rnnlm.H.npy',
+    'rnnlm
