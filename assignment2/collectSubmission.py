@@ -220,4 +220,8 @@ filelist = [
     'part2-RNNLM.ipynb',
     'rnnlm.py',
     'rnnlm.H.npy',
-    'rnnlm
+    'rnnlm.L.npy',
+    'rnnlm.U.npy',
+]
+files_ok = []
+files
