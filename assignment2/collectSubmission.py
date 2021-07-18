@@ -228,4 +228,6 @@ files_missing = []
 
 # Verify required files present
 print "=== Verifying file list ==="
-for fname in filel
+for fname in filelist:
+    print ("File: %s ? -" % fname),
+    if os
