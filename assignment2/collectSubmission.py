@@ -224,4 +224,7 @@ filelist = [
     'rnnlm.U.npy',
 ]
 files_ok = []
-files
+files_missing = []
+
+# Verify required files present
+pr
