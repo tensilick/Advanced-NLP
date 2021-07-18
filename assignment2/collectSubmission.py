@@ -227,4 +227,5 @@ files_ok = []
 files_missing = []
 
 # Verify required files present
-pr
+print "=== Verifying file list ==="
+for fname in filel
