@@ -230,4 +230,5 @@ files_missing = []
 print "=== Verifying file list ==="
 for fname in filelist:
     print ("File: %s ? -" % fname),
-    if os
+    if os.path.isfile(fname):
+        print "ok"; files_ok.appen
