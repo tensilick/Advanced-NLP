@@ -233,4 +233,5 @@ for fname in filelist:
     if os.path.isfile(fname):
         print "ok"; files_ok.append(fname)
     else:
-        print "NOT FO
+        print "NOT FOUND"; files_missing.append(fname)
+if len(files_mi
