@@ -231,4 +231,6 @@ print "=== Verifying file list ==="
 for fname in filelist:
     print ("File: %s ? -" % fname),
     if os.path.isfile(fname):
-        print "ok"; files_ok.appen
+        print "ok"; files_ok.append(fname)
+    else:
+        print "NOT FO
