@@ -236,3 +236,5 @@ for fname in filelist:
         print "NOT FOUND"; files_missing.append(fname)
 if len(files_missing) > 0:
     print "== Error: missing files =="
+    print " ".join(files_missing)
+    if not prompt
