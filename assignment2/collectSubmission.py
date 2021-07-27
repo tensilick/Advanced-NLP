@@ -234,4 +234,5 @@ for fname in filelist:
         print "ok"; files_ok.append(fname)
     else:
         print "NOT FOUND"; files_missing.append(fname)
-if len(files_mi
+if len(files_missing) > 0:
+    print "== Error: missing files =="
