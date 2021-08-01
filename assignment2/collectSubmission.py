@@ -237,4 +237,8 @@ for fname in filelist:
 if len(files_missing) > 0:
     print "== Error: missing files =="
     print " ".join(files_missing)
-    if not prompt
+    if not prompt("Continue submission anyway?"):
+        sys.exit(1)
+
+##
+# 
