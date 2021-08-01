@@ -241,4 +241,5 @@ if len(files_missing) > 0:
         sys.exit(1)
 
 ##
-# 
+# Prepare submission zip
+from zipfile import ZipFile
