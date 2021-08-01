@@ -243,3 +243,8 @@ if len(files_missing) > 0:
 ##
 # Prepare submission zip
 from zipfile import ZipFile
+
+# Get SUNet ID
+sunetid = ""
+fail = -1
+whil
