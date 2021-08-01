@@ -247,4 +247,5 @@ from zipfile import ZipFile
 # Get SUNet ID
 sunetid = ""
 fail = -1
-whil
+while not re.match(r'[\w\d]+', sunetid):
+    fai
