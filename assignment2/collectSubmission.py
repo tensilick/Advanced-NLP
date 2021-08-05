@@ -248,4 +248,5 @@ from zipfile import ZipFile
 sunetid = ""
 fail = -1
 while not re.match(r'[\w\d]+', sunetid):
-    fai
+    fail += 1
+    sunetid = raw_input("=== Please enter your SUNet ID =
