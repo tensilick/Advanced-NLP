@@ -249,4 +249,5 @@ sunetid = ""
 fail = -1
 while not re.match(r'[\w\d]+', sunetid):
     fail += 1
-    sunetid = raw_input("=== Please enter your SUNet ID =
+    sunetid = raw_input("=== Please enter your SUNet ID ===\nSUNet ID: ").lower()
+    if fail > 3: pri
