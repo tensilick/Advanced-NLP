@@ -254,4 +254,5 @@ while not re.match(r'[\w\d]+', sunetid):
 
 # Pack in files
 zipname = "%s.zip" % sunetid
-with ZipFile(zip
+with ZipFile(zipname, 'w') as zf:
+    print "=== Generating su
