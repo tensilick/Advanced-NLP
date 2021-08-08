@@ -252,4 +252,6 @@ while not re.match(r'[\w\d]+', sunetid):
     sunetid = raw_input("=== Please enter your SUNet ID ===\nSUNet ID: ").lower()
     if fail > 3: print "Error: invalid ID"; sys.exit(1)
 
-# Pack in fil
+# Pack in files
+zipname = "%s.zip" % sunetid
+with ZipFile(zip
