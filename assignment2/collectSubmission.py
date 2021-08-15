@@ -258,4 +258,5 @@ with ZipFile(zipname, 'w') as zf:
     print "=== Generating submission file '%s' ===" % zipname
     for fname in files_ok:
         print ("  %s" % fname),
-        z
+        zf.write(fname)
+        print ("(%.02f kB)" % ((1.0/1
