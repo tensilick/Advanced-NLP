@@ -262,4 +262,5 @@ with ZipFile(zipname, 'w') as zf:
         print ("(%.02f kB)" % ((1.0/1024) * zf.getinfo(fname).file_size))
 
 # Check size
-fsi
+fsize = os.path.getsize(zipname)
+SIZE_LIMIT = 3*(2**30) # 30 M
