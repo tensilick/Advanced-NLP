@@ -256,4 +256,6 @@ while not re.match(r'[\w\d]+', sunetid):
 zipname = "%s.zip" % sunetid
 with ZipFile(zipname, 'w') as zf:
     print "=== Generating submission file '%s' ===" % zipname
-    for f
+    for fname in files_ok:
+        print ("  %s" % fname),
+        z
