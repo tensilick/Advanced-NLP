@@ -259,4 +259,7 @@ with ZipFile(zipname, 'w') as zf:
     for fname in files_ok:
         print ("  %s" % fname),
         zf.write(fname)
-        print ("(%.02f kB)" % ((1.0/1
+        print ("(%.02f kB)" % ((1.0/1024) * zf.getinfo(fname).file_size))
+
+# Check size
+fsi
