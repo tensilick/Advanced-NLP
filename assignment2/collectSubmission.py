@@ -271,4 +271,5 @@ else:
     print "too large! (limit = %.02f kB" % ((1.0/1024) * SIZE_LIMIT)
     sys.exit(1)
 
-prin
+print "=== Successfully generated submission zipfile! ==="
+print
