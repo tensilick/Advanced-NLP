@@ -272,4 +272,4 @@ else:
     sys.exit(1)
 
 print "=== Successfully generated submission zipfile! ==="
-print
+print "Please upload '%s' to Box, and don't forget to s
