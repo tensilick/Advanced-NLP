@@ -3,4 +3,7 @@
 # Assigment 2, part 1 for CS224D
 ##
 
-from utils impo
+from utils import invert_dict
+from numpy import *
+
+def load_wv(vocabf
