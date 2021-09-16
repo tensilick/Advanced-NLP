@@ -8,4 +8,5 @@ from numpy import *
 
 def load_wv(vocabfile, wvfile):
     wv = loadtxt(wvfile, dtype=float)
-    with op
+    with open(vocabfile) as fd:
+        words = [line.strip() for line in fd
