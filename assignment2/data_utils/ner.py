@@ -11,4 +11,5 @@ def load_wv(vocabfile, wvfile):
     with open(vocabfile) as fd:
         words = [line.strip() for line in fd]
     num_to_word = dict(enumerate(words))
-    word_to_num
+    word_to_num = invert_dict(num_to_word)
+    return wv, word_to_num, num_
