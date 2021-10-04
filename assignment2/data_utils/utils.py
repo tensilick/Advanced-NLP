@@ -129,3 +129,62 @@ def seq_to_lm_windows(words, word_to_num, ngram=2):
         X.append(idxs[:-1])
         y.append(idxs[-1])
     return array(X), array(y)
+
+def docs_to_lm_windows(docs, word_to_num, ngram=2):
+    docs = flatten1([pad_sequence(seq, left=(ngram-1), right=1)
+                     for seq in docs])
+    words = [canonicalize_word(wt[0], word_to_num) for wt in docs]
+    return seq_to_lm_windows(words, word_to_num, ngram)
+
+
+##
+# For RNN LM
+# just convert each sentence to a list of indices
+# after padding each with <s> ... </s> tokens
+def seq_to_indices(words, word_to_num):
+    return array([word_to_num[w] for w in words])
+
+def docs_to_indices(docs, word_to_num):
+    docs = [pad_sequence(seq, left=1, right=1) for seq in docs]
+    ret = []
+    for seq in docs:
+        words = [canonicalize_word(wt[0], word_to_num) for wt in seq]
+        ret.append(seq_to_indices(words, word_to_num))
+
+    # return as numpy array for fancier slicing
+    return array(ret, dtype=object)
+
+def offset_seq(seq):
+    return seq[:-1], seq[1:]
+
+def seqs_to_lmXY(seqs):
+    X, Y = zip(*[offset_seq(s) for s in seqs])
+    return array(X, dtype=object), array(Y, dtype=object)
+
+##
+# For RNN tagger
+# return X, Y as lists
+# where X[i] is indices, Y[i] is tags for a sequence
+# NOTE: this does not use padding tokens!
+#    (RNN should natively handle begin/end)
+def docs_to_tag_sequence(docs, word_to_num, tag_to_num):
+    # docs = [pad_sequence(seq, left=1, right=1) for seq in docs]
+    X = []
+    Y = []
+    for seq in docs:
+        if len(seq) < 1: continue
+        words, tags = zip(*seq)
+
+        words = [canonicalize_word(w, word_to_num) for w in words]
+        x = seq_to_indices(words, word_to_num)
+        X.append(x)
+
+        tags = [t.split("|")[0] for t in tags]
+        y = seq_to_indices(tags, tag_to_num)
+        Y.append(y)
+
+    # return as numpy array for fancier slicing
+    return array(X, dtype=object), array(Y, dtype=object)
+
+def idxs_to_matrix(idxs, L):
+    """Return a matrix X with each row
