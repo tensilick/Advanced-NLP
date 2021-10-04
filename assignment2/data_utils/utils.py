@@ -188,3 +188,6 @@ def docs_to_tag_sequence(docs, word_to_num, tag_to_num):
 
 def idxs_to_matrix(idxs, L):
     """Return a matrix X with each row
+    as a word vector for the corresponding
+    index in idxs."""
+    return vstack([L[i] for i in idxs])
