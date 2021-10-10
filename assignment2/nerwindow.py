@@ -130,3 +130,58 @@ class WindowMLP(NNBase):
 
         self.grads.b2 += delta_out.flatten()
         #print "self.grads.b2.shape: %s " % (self.grads.b2.shape,)
+
+        delta_hidden = delta_out.dot(self.params.U) * 4.0 * sigmoid_grad( s )
+        
+        self.grads.W  += delta_hidden.T.dot(onehot_vecs) + self.lreg * self.params.W
+        self.grads.b1 += delta_hidden.flatten()
+
+        #print "self.grads.b2.shape: %s " % (self.grads.b1.shape,)
+
+        grad_xs = delta_hidden.dot(self.params.W).T
+        #print "grad_xs.shape: %s " % (grad_xs.shape,)
+
+        self.sgrads.L[window[0]] = grad_xs[range(0,50)].flatten()
+        self.sgrads.L[window[1]] = grad_xs[range(50,100)].flatten()
+        self.sgrads.L[window[2]] = grad_xs[range(100,150)].flatten()
+
+        #### END YOUR CODE ####
+
+
+    def predict_proba(self, windows):
+        """
+        Predict class probabilities.
+
+        Should return a matrix P of probabilities,
+        with each row corresponding to a row of X.
+
+        windows = array (n x windowsize),
+            each row is a window of indices
+        """
+        # handle singleton input by making sure we have
+        # a list-of-lists
+        if not hasattr(windows[0], "__iter__"):
+            windows = [windows]
+
+        #### YOUR CODE HERE ####
+        onehot_vecs = asarray( [ self.sparams.L[windows[i],:].flatten() for i in range(len(windows)) ] )
+
+        a1 = self.params.W.dot(onehot_vecs.T).T + self.params.b1
+        h  = tanh( a1 )
+        a2 = self.params.U.dot(h.T).T + self.params.b2
+        P  = softmax( a2 ) #y_hat
+
+        #### END YOUR CODE ####
+
+        return P # rows are output for each input
+
+
+    def predict(self, windows):
+        """
+        Predict most likely class.
+        Returns a list of predicted class indices;
+        input is same as to predict_proba
+        """
+
+        #### YOUR CODE HERE ####
+        proba = self.predict_proba(windows)
