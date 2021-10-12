@@ -185,3 +185,35 @@ class WindowMLP(NNBase):
 
         #### YOUR CODE HERE ####
         proba = self.predict_proba(windows)
+        c = argmax(proba,axis=1)
+
+        #### END YOUR CODE ####
+        return c # list of predicted classes
+
+
+    def compute_loss(self, windows, labels):
+        """
+        Compute the loss for a given dataset.
+        windows = same as for predict_proba
+        labels = list of class labels, for each row of windows
+        """
+
+        #### YOUR CODE HERE ####
+        """ 
+        windows = array (n x windowsize), each row is a window of indices
+        """
+
+        if not hasattr(windows[0], "__iter__"):
+            windows = [windows]
+
+        if not hasattr(labels, "__iter__"):
+            labels = [labels]
+
+        proba = self.predict_proba(windows)
+
+        J = sum( - log( proba[range(len(labels)),labels] ) )
+
+        J += (self.lreg / 2.0) *  ( sum( self.params.W ** 2 ) + sum( self.params.U ** 2 ) )
+
+        #### END YOUR CODE ####
+        return J
