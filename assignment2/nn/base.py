@@ -84,3 +84,56 @@ class SparseDelta(object):
     handled properly, as this is just forwarded
     to the NumPy array later.
     """
+
+    _data = []
+    def __init__(self):
+        self._data = []
+
+    def __setitem__(self, key, value):
+        self._data.append((key, value))
+
+    def __iter__(self): # iterate through managed list
+        return self._data.__iter__()
+
+    def coalesce(self):
+        """
+        Sum all updates with the same index.
+        This is O(n^2) in the number of updates stored,
+        so potentially slow - only use for grad_check.
+        """
+        # self._data = sorted(self._data)
+        N = len(self._data)
+        newdata = []
+        for i in range(N):
+            k1,v1 = self._data[i]
+            # if k1 == None: continue
+            if k1 is None: continue
+            for j in range(i+1,N):
+                k2,v2 = self._data[j]
+                if k2 == k1:
+                    v1 += v2 # combine updates
+                    self._data[j] = (None, None)
+            newdata.append((k1, v1))
+        self._data = newdata
+
+    def __repr__(self):
+        return "SparseDelta(" + self._data.__repr__() + ")"
+
+    def reset(self):
+        self._data = []
+
+
+class SparseDeltas(object):
+    """
+    Sparse update manager, compatible with PackedVector.
+
+    Designed as an efficient implementation of a block-sparse
+    matrix in a dictionary-of-keys style, although with a restricted
+    set of features intended for use in managing gradients.
+
+    Stores a collection of SparseDelta objects that parallels
+    the views of a a PackedVector object. Each SparseDelta manages
+    pairs [(idx, array), ...] for a given matrix, where idx is a rich
+    indexing object that can be specified with full slicing semantics
+    and used to selectively update an arbitary component of the target
+    matrix.
