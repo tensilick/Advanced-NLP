@@ -137,3 +137,62 @@ class SparseDeltas(object):
     indexing object that can be specified with full slicing semantics
     and used to selectively update an arbitary component of the target
     matrix.
+
+    This should be useful for updating e.g. word vector representations
+    in an efficient manner during SGD.
+
+    Accumulate updates as:
+    pv = PackedVector(**shapemap)
+    sd = SparseDeltas(**shapemap)
+    sd.W[idx] = value
+    sd.apply_to(pv)
+    sd.reset()
+    """
+
+    def __init__(self, *shapes, **shapemap):
+        # Prepend named shapes
+        names = range(len(shapes))
+        if len(shapemap) > 0:
+            nn, ss = zip(*shapemap.items())
+            names = names + list(nn)
+        self._names = set(map(str, names))
+
+        # Generate attributes for direct access
+        for n in self._names:
+            s = SparseDelta()
+            setattr(self, n, s)
+
+    def __getitem__(self, key):
+        if key in self._names:
+            return getattr(self, key)
+        else: raise ValueError("Key %s not found." % key)
+
+    def coalesce(self):
+        for n in self._names:
+            self[n].coalesce()
+
+    def reset(self):
+        for n in self._names:
+            self[n].reset()
+
+    def names(self):
+        return list(self._names)
+
+    def apply_to(self, pv, alpha=-1.0):
+        """Apply sparse updates to parameter store."""
+        # assert(type(pv) == PackedVector)
+
+        for n in self._names:
+            #print n
+            ud = self[n] # update dict
+            #print ud
+            for idx, v in ud: # idx, vec pairs
+                #print idx
+                #print v
+                #print pv[n][idx]
+                pv[n][idx] += alpha*v # in-place update
+
+
+    def __repr__(self):
+        elems = "\n".join(str(n) + " = " + repr(self[n])
+                          for n in self._names)
