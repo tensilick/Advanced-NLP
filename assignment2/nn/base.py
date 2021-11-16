@@ -249,3 +249,57 @@ class NNBase(object):
         """Reset accumulated gradients."""
         self.grads.reset()
         self.sgrads.reset()
+
+    def _acc_grads(self, x, y):
+        """
+        Accumulate gradients, given data -> response.
+
+        Subclass must implement this to be train-able.
+        """
+        raise NotImplementedError("_acc_grads not yet implemented")
+
+    def _apply_grad_acc(self, alpha=1.0):
+        """
+        Update parameters with accumulated gradients.
+
+        alpha can be a scalar (as in SGD), or a vector
+        of the same length as the full concatenated
+        parameter vector (as in e.g. AdaGrad)
+        """
+        # Dense updates
+        self.params.full -= alpha * self.grads.full
+        # Sparse updates
+        self.sgrads.apply_to(self.sparams, alpha=-1*alpha)
+
+
+    def train_point_sgd(self, x, y, alpha):
+        """Generic single-point SGD"""
+        self._reset_grad_acc()
+        self._acc_grads(x, y)
+        self._apply_grad_acc(alpha)
+
+    def train_minibatch_sgd(self, X, y, alpha):
+        """
+        Generic minibatch SGD
+        """
+        self._reset_grad_acc()
+
+        for i in range(len(y)):
+            self._acc_grads(X[i], y[i])
+        self._apply_grad_acc(alpha)
+
+
+    def grad_check(self, x, y, eps=1e-4, tol=1e-6,
+                   outfd=sys.stderr, verbose=False,
+                   skiplist=[]):
+        """
+        Generic gradient check: uses current params
+        aonround a specific data point (x,y)
+
+        This is implemented for diagnostic purposes,
+        and is not optimized for speed. It is recommended
+        to run this on a couple points to test a new
+        neural network implementation.
+        """
+        # Accumulate gradients in self.grads
+        self._reset_grad_acc()
