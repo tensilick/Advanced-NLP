@@ -303,3 +303,57 @@ class NNBase(object):
         """
         # Accumulate gradients in self.grads
         self._reset_grad_acc()
+        self._acc_grads(x, y)
+        self.sgrads.coalesce() # combine sparse updates
+
+        ##
+        # Loop over dense parameters
+        for name in self.params.names():
+            if name in skiplist: continue
+            theta = self.params[name]
+            grad_computed = self.grads[name]
+            grad_approx = zeros(theta.shape)
+            for ij, v in ndenumerate(theta):
+                tij = theta[ij]
+                theta[ij] = tij + eps
+                Jplus  = self.compute_loss(x, y)
+                theta[ij] = tij - eps
+                Jminus = self.compute_loss(x, y)
+                theta[ij] = tij # reset
+                grad_approx[ij] = (Jplus - Jminus)/(2*eps)
+            # Compute Frobenius norm
+            grad_delta = linalg.norm(grad_approx - grad_computed)
+            print >> outfd, "grad_check: dJ/d%s error norm = %.04g" % (name, grad_delta),
+            print >> outfd, ("[ok]" if grad_delta < tol else "**ERROR**")
+            print >> outfd, "    %s dims: %s = %d elem" % (name, str(list(theta.shape)), prod(theta.shape))
+            if verbose and (grad_delta > tol): # DEBUG
+                print >> outfd, "Numerical: \n" + str(grad_approx)
+                print >> outfd, "Computed:  \n" + str(grad_computed)
+                break
+
+        ##
+        # Loop over sparse parameters
+        for name in self.sparams.names():
+            if name in skiplist: continue
+            theta_full = self.sparams[name]
+            idxblocks = np.indices(theta_full.shape)
+            # Loop over all sparse updates for this parameter
+            for idx, grad_computed in self.sgrads[name]:
+                # For arbitary indexing, might not get a contiguous block
+                # therefore, can't use views for aliasing here
+                # Solution: generate index arrays, select indices
+                # then use these for sparse grad check
+                idxtuples = zip(*[d[idx].flat for d in idxblocks])
+                # idxtuples = zip(*[idxblocks[i][idx].flat
+                #                   for i in range(idxblocks.shape[0])])
+
+                # if name == "L": import pdb; pdb.set_trace() # DEBUG
+
+                grad_approx = zeros(len(idxtuples))
+                theta = theta_full # alias full
+                for k, ij in enumerate(idxtuples):
+                    tij = theta[ij]
+                    theta[ij] = tij + eps
+                    Jplus  = self.compute_loss(x, y)
+                    theta[ij] = tij - eps
+                    Jminus = self.compute_loss(x, y)
