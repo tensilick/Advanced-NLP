@@ -196,3 +196,56 @@ class SparseDeltas(object):
     def __repr__(self):
         elems = "\n".join(str(n) + " = " + repr(self[n])
                           for n in self._names)
+        return "SparseDeltas(\n" + elems + "\n)"
+
+
+
+class NNBase(object):
+    """
+    Versatile base class for Neural Network models.
+    Implements generic parameter management, supporting
+    both densely-updated parameters (e.g. weight matricies)
+    and sparsely-updated parameters (e.g. representations),
+    and allowing for generic learning algorithms to be
+    implemented for a wide variety of NNs based on this class.
+
+    This implements training routines and gradient checks,
+    and need only be suppleme
+
+    Subclass must implement, at minimum:
+        - _acc_grads()
+        - predict()
+        - compute_loss()
+
+    And should also implement an __init__() method
+    that calls super.__init__() with an appropriate
+    set of parameters:
+        - param_dims_dense = {"W": [100x150], "b1": [100,], ...}
+        - param_dims_sparse = {"L": [40000x50], ...} (optional)
+        - hypers = (optional) dictionary of additional hyperparameters
+    """
+
+    def __init__(self, param_dims_dense,
+                 param_dims_sparse={}, **hypers):
+        # Set up hyperparameters
+        for p, v in hypers:
+            setattr(self, p, v)
+
+        ##
+        # Set up parameters for dense updates
+        self._param_dims_dense = param_dims_dense
+        self.params = PackedVector(**param_dims_dense)
+        self.grads = PackedVector(**param_dims_dense)
+
+        ##
+        # Set up parameters for sparse updates
+        self._param_dims_sparse = param_dims_sparse
+        self.sparams = PackedVector(**param_dims_sparse)
+        self.sgrads = SparseDeltas(**param_dims_sparse)
+
+
+
+    def _reset_grad_acc(self):
+        """Reset accumulated gradients."""
+        self.grads.reset()
+        self.sgrads.reset()
