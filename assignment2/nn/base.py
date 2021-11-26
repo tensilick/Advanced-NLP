@@ -357,3 +357,59 @@ class NNBase(object):
                     Jplus  = self.compute_loss(x, y)
                     theta[ij] = tij - eps
                     Jminus = self.compute_loss(x, y)
+                    theta[ij] = tij # reset
+                    grad_approx[k] = (Jplus - Jminus)/(2*eps)
+                # Thankfully, numpy is *very* consistent about index order
+                # and so this will put all the above indices in the right place!
+                # idxtuples (i,j,k,...) are sorted by i, then j, then k, ...
+                # and so will be packed properly in row-major order to match
+                # the old array slice we took.
+                grad_approx = grad_approx.reshape(grad_computed.shape)
+
+                ##
+                # Old version here breaks on idx = [1,2,3]
+                # theta = theta_full[idx] # view of update block
+                # grad_approx = zeros(theta.shape)
+
+                # # Loop over all indices within update block
+                # for ij, v in ndenumerate(theta):
+                #     tij = theta[ij]
+                #     theta[ij] = tij + eps
+                #     Jplus  = self.compute_loss(x, y)
+                #     theta[ij] = tij - eps
+                #     Jminus = self.compute_loss(x, y)
+                #     theta[ij] = tij # reset
+                #     grad_approx[ij] = (Jplus - Jminus)/(2*eps)
+                # Compute Frobenius norm
+                grad_delta = linalg.norm(grad_approx - grad_computed)
+                print >> outfd, "grad_check: dJ/d%s[%s] error norm = %.04g" % (name, idx, grad_delta),
+                print >> outfd, ("[ok]" if grad_delta < tol else "**ERROR**")
+                print >> outfd, "    %s[%s] dims: %s = %d elem" % (name, idx, str(list(grad_computed.shape)), prod(grad_computed.shape))
+                if verbose and (grad_delta > tol): # DEBUG
+                    print >> outfd, "Numerical: \n" + str(grad_approx)
+                    print >> outfd, "Computed:  \n" + str(grad_computed)
+                    break
+
+        self._reset_grad_acc()
+
+
+    def predict_proba(self, X):
+        """
+        Predict class probabilities.
+
+        Should return a matrix P of probabilities,
+        with each row corresponding to a row of X.
+        """
+        raise NotImplementedError("predict_proba not yet implemented")
+
+    def predict(self, X):
+        """
+        Predict output (score, class, etc.)
+        """
+        raise NotImplementedError("predict not yet implemented")
+
+    def compute_loss(self, X, y):
+        """Compute loss over data X,y"""
+        raise NotImplementedError("compute_loss not yet implemented")
+
+    def compute_mean_loss(self, X, y):
