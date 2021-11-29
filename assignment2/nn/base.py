@@ -413,3 +413,51 @@ class NNBase(object):
         raise NotImplementedError("compute_loss not yet implemented")
 
     def compute_mean_loss(self, X, y):
+        return self.compute_loss(X, y) / len(y)
+
+    def compute_display_loss(self, X, y):
+        """
+        Optional alternative loss function for printing or diagnostics.
+        """
+        return self.compute_mean_loss(X, y)
+
+    def train_sgd(self, X, y,
+                  idxiter=None, alphaiter=None,
+                  printevery=10000, costevery=10000,
+                  devidx=None):
+        if idxiter == None: # default training schedule
+            idxiter = xrange(len(y))
+        if alphaiter == None: # default training schedule
+            alphaiter = itertools.repeat(self.alpha)
+
+        costs = []
+        counter = 0
+        t0 = time.time()
+
+        try:
+            print "Begin SGD..."
+            for idx, alpha in itertools.izip(idxiter, alphaiter):
+                if counter % printevery == 0:
+                    print "  Seen %d in %.02f s" % (counter, time.time() - t0)
+                if counter % costevery == 0:
+                    if devidx != None:
+                        cost = self.compute_display_loss(X[devidx], y[devidx])
+                    else: cost = self.compute_display_loss(X, y)
+                    costs.append((counter, cost))
+                    print "  [%d]: mean loss %g" % (counter, cost)
+
+                if hasattr(idx, "__iter__") and len(idx) > 1: # if iterable
+                    self.train_minibatch_sgd(X[idx], y[idx], alpha)
+                elif hasattr(idx, "__iter__") and len(idx) == 1: # single point
+                    idx = idx[0]
+                    self.train_point_sgd(X[idx], y[idx], alpha)
+                else:
+                    self.train_point_sgd(X[idx], y[idx], alpha)
+
+                counter += 1
+        except KeyboardInterrupt as ke:
+            """
+            Allow manual early termination.
+            """
+            print "SGD Interrupted: saw %d examples in %.02f seconds." % (counter, time.time() - t0)
+            return costs
