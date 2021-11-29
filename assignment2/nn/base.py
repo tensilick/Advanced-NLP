@@ -461,3 +461,39 @@ class NNBase(object):
             """
             print "SGD Interrupted: saw %d examples in %.02f seconds." % (counter, time.time() - t0)
             return costs
+
+        # Wrap-up
+        if devidx != None:
+            cost = self.compute_display_loss(X[devidx], y[devidx])
+        else: cost = self.compute_display_loss(X, y)
+        costs.append((counter, cost))
+        print "  [%d]: mean loss %g" % (counter, cost)
+        print "SGD complete: %d examples in %.02f seconds." % (counter, time.time() - t0)
+
+        return costs
+
+
+    @staticmethod
+    def epochiter(N, nepoch=5):
+        """Iterator to loop sequentially through training sets."""
+        return itertools.chain.from_iterable(
+                    itertools.repeat(xrange(N), nepoch))
+
+    @staticmethod
+    def randomiter(N, high, batch=1):
+        """Iterator to generate random minibatches."""
+        for i in xrange(N):
+            yield random.randint(0, high, size=batch)
+
+    @staticmethod
+    def annealiter(a0, epoch=10000):
+        """
+        Iterator to anneal learning rate.
+        Steps down in a harmonic series after each epoch.
+        So, annealiter(1.0, epoch=2) will yield
+        1.0 1.0 0.5 0.5 0.33 0.33 0.25 0.25 ...
+        """
+        ctr = 0
+        while True:
+            yield a0 * 1.0/((ctr+epoch)/epoch)
+            ctr += 1
