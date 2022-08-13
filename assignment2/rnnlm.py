@@ -244,3 +244,43 @@ class RNNLM(NNBase):
 
         to sample an index y from the vector of probabilities p.
 
+
+        Arguments:
+            init = index of start word (word_to_num['<s>'])
+            end = index of end word (word_to_num['</s>'])
+            maxlen = maximum length to generate
+
+        Returns:
+            ys = sequence of indices
+            J = total cross-entropy loss of generated sequence
+        """
+
+        J = 0 # total loss
+        ys = [init] # emitted sequence
+
+        #### YOUR CODE HERE ####
+        h_ant = zeros((1, self.hdim))
+
+        for step in xrange(maxlen):
+            a1 = self.params.H.dot(h_ant.T).T + self.sparams.L[ys[step]]
+            h  = sigmoid( a1 )
+            a2 = self.params.U.dot(h.T).T
+            # print "h.shape %s" % (h.shape,)
+            # print "a2.shape %s" % (a2.shape,)
+            # print "self.params.U.shape %s" % (self.params.U.shape,)
+            y_hat = softmax( a2 )
+            h_ant = h
+            ys.append( multinomial_sample(y_hat) )
+            J -= log( y_hat[:,ys[step]] )
+
+
+        ys.append(end)
+
+        #### YOUR CODE HERE ####
+        return ys, J
+
+
+
+class ExtraCreditRNNLM(RNNLM):
+    """
+    Implements an improved RNN language model,
