@@ -194,3 +194,53 @@ class RNNLM(NNBase):
             a1 = self.params.H.dot(h_ant.T).T + self.sparams.L[xs[step]]
             h  = sigmoid( a1 )
             a2 = self.params.U.dot(h.T).T
+            # print "h.shape %s" % (h.shape,)
+            # print "a2.shape %s" % (a2.shape,)
+            # print "self.params.U.shape %s" % (self.params.U.shape,)
+            y_hat = softmax( a2 )
+            h_ant = h
+
+            J -= log( y_hat[:,ys[step]] )
+
+        #### END YOUR CODE ####
+        return J
+
+
+    def compute_loss(self, X, Y):
+        """
+        Compute total loss over a dataset.
+        (wrapper for compute_seq_loss)
+
+        Do not modify this function!
+        """
+        if not isinstance(X[0], ndarray): # single example
+            return self.compute_seq_loss(X, Y)
+        else: # multiple examples
+            return sum([self.compute_seq_loss(xs,ys)
+                       for xs,ys in itertools.izip(X, Y)])
+
+    def compute_mean_loss(self, X, Y):
+        """
+        Normalize loss by total number of points.
+
+        Do not modify this function!
+        """
+        J = self.compute_loss(X, Y)
+        ntot = sum(map(len,Y))
+        return J / float(ntot)
+
+
+    def generate_sequence(self, init, end, maxlen=100):
+        """
+        Generate a sequence from the language model,
+        by running the RNN forward and selecting,
+        at each timestep, a random word from the
+        a word from the emitted probability distribution.
+
+        The MultinomialSampler class (in nn.math) may be helpful
+        here for sampling a word. Use as:
+
+            y = multinomial_sample(p)
+
+        to sample an index y from the vector of probabilities p.
+
