@@ -85,3 +85,56 @@ class RNNLM(NNBase):
         Per the handout, you should:
             - make predictions by running forward in time
                 through the entire input sequence
+            - for *each* output word in ys, compute the
+                gradients with respect to the cross-entropy
+                loss for that output word
+            - run backpropagation-through-time for self.bptt
+                timesteps, storing grads in self.grads (for H, U)
+                and self.sgrads (for L)
+
+        You'll want to store your predictions \hat{y}(t)
+        and the hidden layer values h(t) as you run forward,
+        so that you can access them during backpropagation.
+
+        At time 0, you should initialize the hidden layer to
+        be a vector of zeros.
+        """
+
+        # Expect xs as list of indices
+        ns = len(xs)
+
+        # make matrix here of corresponding h(t)
+        # hs[-1] = initial hidden state (zeros)
+        hs = zeros((ns+1, self.hdim))
+        # predicted probas
+        ps = zeros((ns, self.vdim))
+
+        #### YOUR CODE HERE ####
+        ##
+        # Forward propagation
+        for step in xrange(0,ns):
+            # print "hs[step-1].shape %s" % (hs[step-1].shape,)
+            # print "self.params.H.shape %s" % (self.params.H.shape,)
+            # print "self.sparams.L.shape %s" % (self.sparams.L.shape,)
+            # print "self.sparams.L[xs[step]].shape %s" % (self.sparams.L[xs[step]].shape,)
+            a1 = self.params.H.dot(hs[step-1].T).T + self.sparams.L[xs[step]]
+            a1 = expand_dims(a1,axis=0)
+            h  = sigmoid( a1 )
+            a2 = self.params.U.dot(h.T).T
+            # print "h.flatten().shape %s" % (h.flatten().shape,)
+            # print "a2.shape %s" % (a2.shape,)
+            # print "self.params.U.shape %s" % (self.params.U.shape,)
+            y_hat = softmax( a2 )
+
+            # print "y_hat.shape %s" % (y_hat.shape,)
+
+            hs[step] = h.flatten()
+            ps[step] = y_hat
+
+        ##
+        # Backward propagation through time
+        for step in xrange(ns-1,-1,-1):
+            t = zeros( ps[step].shape )
+            t[ys[step]] = 1
+            delta_out = ps[step] - t
+            self.grads.U += outer(hs[step],delta_out).T
