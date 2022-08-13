@@ -138,3 +138,59 @@ class RNNLM(NNBase):
             t[ys[step]] = 1
             delta_out = ps[step] - t
             self.grads.U += outer(hs[step],delta_out).T
+
+            delta_hidden = delta_out.dot(self.params.U) * sigmoid_grad( hs[step] )
+
+            for step_bp in xrange(step,step-self.bptt-1,-1):
+                if step_bp < 0:
+                    break
+                self.grads.H  += outer(delta_hidden,hs[step_bp-1])
+                self.sgrads.L[xs[step_bp]] = delta_hidden
+                delta_hidden = delta_hidden.dot(self.params.H) * sigmoid_grad( hs[step_bp-1] )                
+
+        #### END YOUR CODE ####
+
+
+
+    def grad_check(self, x, y, outfd=sys.stderr, **kwargs):
+        """
+        Wrapper for gradient check on RNNs;
+        ensures that backprop-through-time is run to completion,
+        computing the full gradient for the loss as summed over
+        the input sequence and predictions.
+
+        Do not modify this function!
+        """
+        bptt_old = self.bptt
+        self.bptt = len(y)
+        print >> outfd, "NOTE: temporarily setting self.bptt = len(y) = %d to compute true gradient." % self.bptt
+        NNBase.grad_check(self, x, y, outfd=outfd, **kwargs)
+        self.bptt = bptt_old
+        print >> outfd, "Reset self.bptt = %d" % self.bptt
+
+
+    def compute_seq_loss(self, xs, ys):
+        """
+        Compute the total cross-entropy loss
+        for an input sequence xs and output
+        sequence (labels) ys.
+
+        You should run the RNN forward,
+        compute cross-entropy loss at each timestep,
+        and return the sum of the point losses.
+        """
+
+        ns = len(xs)
+
+        h_ant = zeros((1, self.hdim))
+
+        J = 0
+        #### YOUR CODE HERE ####
+        for step in xrange(0,ns):
+            # print "hs[step-1].shape %s" % (hs[step-1].shape,)
+            # print "self.params.H.shape %s" % (self.params.H.shape,)
+            # print "self.sparams.L.shape %s" % (self.sparams.L.shape,)
+            # print "self.sparams.L[xs[step]].shape %s" % (self.sparams.L[xs[step]].shape,)
+            a1 = self.params.H.dot(h_ant.T).T + self.sparams.L[xs[step]]
+            h  = sigmoid( a1 )
+            a2 = self.params.U.dot(h.T).T
