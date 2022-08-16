@@ -59,3 +59,46 @@ class SoftmaxRegression(NNBase):
         # Compute gradients w.r.t cross-entropy loss
         y = make_onehot(label, len(p))
         delta = p - y
+        # dJ/dW, dJ/db1
+        self.grads.W += outer(delta, x) + self.lreg * self.params.W
+        self.grads.b += delta
+        # dJ/dL, sparse update: use sgrads
+        # this stores an update to the row L[idx]
+        self.sgrads.L[idx] = self.params.W.T.dot(delta)
+        # note that the syntax is overloaded here; L[idx] =
+        # works like +=, so if you update the same index
+        # twice, it'll store *BOTH* updates. For example:
+        # self.sgrads.L[idx] = ones(50)
+        # self.sgrads.L[idx] = ones(50)
+        # will add -2*alpha to that row when gradients are applied!
+
+        ##
+        # We don't need to do the update ourself, as NNBase
+        # calls that during training. See NNBase.train_sgd
+        # in nn/base.py to see how this is done, if interested.
+        ##
+
+    def compute_loss(self, idx, label):
+        """
+        Compute the cost function for a single example.
+        """
+        ##
+        # Forward propagation
+        x = self.sparams.L[idx]
+        p = softmax(self.params.W.dot(x) + self.params.b)
+        J = -1*log(p[label]) # cross-entropy loss
+        Jreg = (self.lreg / 2.0) * sum(self.params.W**2.0)
+        return J + Jreg
+
+    def predict_proba(self, idx):
+        """
+        Predict class probabilities.
+        """
+        x = self.sparams.L[idx]
+        p = softmax(self.params.W.dot(x) + self.params.b)
+        return p
+
+    def predict(self, idx):
+        """Predict most likely class."""
+        P = self.predict_proba(idx)
+        return argmax(P, axis=1)
