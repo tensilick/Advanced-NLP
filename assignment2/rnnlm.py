@@ -284,3 +284,30 @@ class RNNLM(NNBase):
 class ExtraCreditRNNLM(RNNLM):
     """
     Implements an improved RNN language model,
+    for better speed and/or performance.
+
+    We're not going to place any constraints on you
+    for this part, but we do recommend that you still
+    use the starter code (NNBase) framework that
+    you've been using for the NER and RNNLM models.
+    """
+
+    def __init__(self, *args, **kwargs):
+        #### YOUR CODE HERE ####
+        raise NotImplementedError("__init__() not yet implemented.")
+        #### END YOUR CODE ####
+
+    def _acc_grads(self, xs, ys):
+        #### YOUR CODE HERE ####
+        raise NotImplementedError("_acc_grads() not yet implemented.")
+        #### END YOUR CODE ####
+
+    def compute_seq_loss(self, xs, ys):
+        #### YOUR CODE HERE ####
+        raise NotImplementedError("compute_seq_loss() not yet implemented.")
+        #### END YOUR CODE ####
+
+    def generate_sequence(self, init, end, maxlen=100):
+        #### YOUR CODE HERE ####
+        raise NotImplementedError("generate_sequence() not yet implemented.")
+        #### END YOUR CODE ####
