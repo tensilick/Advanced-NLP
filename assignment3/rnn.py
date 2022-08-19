@@ -99,3 +99,54 @@ class RNN:
         ################
         # TODO: Implement the recursive forwardProp function
         #  - you should update node.probs, node.hActs1, node.fprop, and cost
+        #  - node: your current node in the parse tree
+        #  - correct: this is a running list of truth labels
+        #  - guess: this is a running list of guess that our model makes
+        #     (we will use both correct and guess to make our confusion matrix)
+        ################
+
+        #import pdb
+        #pdb.set_trace()
+
+        cost_right = 0
+        cost_left  = 0
+        tot_left   = 0
+        tot_right  = 0
+
+        if node.left != None and node.left.fprop == False:
+            cost_left, tot_left = self.forwardProp(node.left,correct,guess)
+
+        if node.right != None and node.right.fprop == False:
+            cost_right, tot_right = self.forwardProp(node.right,correct,guess)
+
+        cost  = cost_right + cost_left
+        total = tot_left + tot_right
+
+        if node.isLeaf:
+            node.hAct1s = self.L[:,node.word]
+        else:
+            node.hAct1s = np.dot(self.W, np.hstack([node.left.hAct1s,node.right.hAct1s])) + self.b
+            node.hAct1s[node.hAct1s < 0] = 0
+
+        node.probs = np.dot(self.Ws,node.hAct1s) + self.bs
+        node.probs -= np.max(node.probs)
+        node.probs = np.exp(node.probs)
+        node.probs = node.probs / np.sum(node.probs)
+
+        cost -= np.log( node.probs[node.label] )
+
+        correct.append(node.label)
+        guess.append(np.argmax(node.probs))
+        node.fprop = True
+
+        return cost, total + 1
+
+
+    def backProp(self,node,error=None):
+
+        # Clear nodes
+        node.fprop = False
+
+        ################
+        # TODO: Implement the recursive backProp function
+        #  - you should update self.dWs, self.dbs, self.dW, self.db, and self.dL[node.word] accordingly
