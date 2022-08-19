@@ -150,3 +150,58 @@ class RNN:
         ################
         # TODO: Implement the recursive backProp function
         #  - you should update self.dWs, self.dbs, self.dW, self.db, and self.dL[node.word] accordingly
+        #  - node: your current node in the parse tree
+        #  - error: error that has been passed down from a previous iteration
+        ################
+
+
+        deltas = node.probs
+        deltas[node.label] -= 1.0
+        self.dWs += np.outer(deltas,node.hAct1s)
+        self.dbs += deltas
+        deltas = np.dot(self.Ws.T,deltas)
+
+        if error is not None:
+            deltas += error
+
+        deltas *= (node.hAct1s != 0)
+
+        if node.isLeaf:
+            self.dL[node.word] += deltas
+            return
+        else:
+            self.dW += np.outer(deltas,np.hstack([node.left.hAct1s,node.right.hAct1s]))
+            self.db += deltas
+            deltas  = np.dot(self.W.T,deltas)
+            self.backProp(node.left, deltas[:self.wvecDim])
+            self.backProp(node.right,deltas[self.wvecDim:])
+
+    def updateParams(self,scale,update,log=False):
+        """
+        Updates parameters as
+        p := p - scale * update.
+        If log is true, prints root mean square of parameter
+        and update.
+        """
+        if log:
+            for P,dP in zip(self.stack[1:],update[1:]):
+                pRMS = np.sqrt(np.mean(P**2))
+                dpRMS = np.sqrt(np.mean((scale*dP)**2))
+                print "weight rms=%f -- update rms=%f"%(pRMS,dpRMS)
+
+        self.stack[1:] = [P+scale*dP for P,dP in zip(self.stack[1:],update[1:])]
+
+        # handle dictionary update sparsely
+        dL = update[0]
+        for j in dL.iterkeys():
+            self.L[:,j] += scale*dL[j]
+
+    def toFile(self,fid):
+        import cPickle as pickle
+        pickle.dump(self.stack,fid)
+
+    def fromFile(self,fid):
+        import cPickle as pickle
+        self.stack = pickle.load(fid)
+
+    def check_grad(self,data,epsilon=1e-6):
