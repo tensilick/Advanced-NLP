@@ -50,3 +50,52 @@ class RNN:
            cost
            Gradient w.r.t. W, Ws, b, bs
            Gradient w.r.t. L in sparse form.
+
+        or if in test mode
+        Returns
+           cost, correctArray, guessArray, total
+
+        """
+        cost = 0.0
+        correct = []
+        guess = []
+        total = 0.0
+
+        self.L,self.W,self.b,self.Ws,self.bs = self.stack
+
+        # Zero gradients
+        self.dW[:] = 0
+        self.db[:] = 0
+        self.dWs[:] = 0
+        self.dbs[:] = 0
+        self.dL = collections.defaultdict(self.defaultVec)
+
+        # Forward prop each tree in minibatch
+        for tree in mbdata:
+            c,tot = self.forwardProp(tree.root,correct,guess)
+            cost += c
+            total += tot
+        if test:
+            return (1./len(mbdata))*cost,correct,guess,total
+
+        # Back prop each tree in minibatch
+        for tree in mbdata:
+            self.backProp(tree.root)
+
+        # scale cost and grad by mb size
+        scale = (1./self.mbSize)
+        for v in self.dL.itervalues():
+            v *=scale
+
+        # Add L2 Regularization
+        cost += (self.rho/2)*np.sum(self.W**2)
+        cost += (self.rho/2)*np.sum(self.Ws**2)
+
+        return scale*cost,[self.dL,scale*(self.dW + self.rho*self.W),scale*self.db,
+                           scale*(self.dWs+self.rho*self.Ws),scale*self.dbs]
+
+    def forwardProp(self,node,correct=[], guess=[]):
+        cost  =  total = 0.0 # cost should be a running number and total is the total examples we have seen used in accuracy reporting later
+        ################
+        # TODO: Implement the recursive forwardProp function
+        #  - you should update node.probs, node.hActs1, node.fprop, and cost
