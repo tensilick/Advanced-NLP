@@ -247,3 +247,21 @@ class RNN:
         if 0.001 > err2/count:
             print "Grad Check Passed for dL"
         else:
+            print "Grad Check Failed for dL: Sum of Error = %.9f" % (err2/count)
+
+if __name__ == '__main__':
+
+    import tree as treeM
+    train = treeM.loadTrees()
+    numW = len(treeM.loadWordMap())
+
+    wvecDim = 10
+    outputDim = 5
+
+    rnn = RNN(wvecDim,outputDim,numW,mbSize=4)
+    rnn.initParams()
+
+    mbData = train[:4]
+
+    print "Numerical gradient check..."
+    rnn.check_grad(mbData)
