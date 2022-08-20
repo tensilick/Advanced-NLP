@@ -205,3 +205,45 @@ class RNN:
         self.stack = pickle.load(fid)
 
     def check_grad(self,data,epsilon=1e-6):
+
+        cost, grad = self.costAndGrad(data)
+
+        err1 = 0.0
+        count = 0.0
+        print "Checking dW..."
+        for W,dW in zip(self.stack[1:],grad[1:]):
+            W = W[...,None] # add dimension since bias is flat
+            dW = dW[...,None]
+            for i in xrange(W.shape[0]):
+                for j in xrange(W.shape[1]):
+                    W[i,j] += epsilon
+                    costP,_ = self.costAndGrad(data)
+                    W[i,j] -= epsilon
+                    numGrad = (costP - cost)/epsilon
+                    err = np.abs(dW[i,j] - numGrad)
+                    err1+=err
+                    count+=1
+
+        if 0.001 > err1/count:
+            print "Grad Check Passed for dW"
+        else:
+            print "Grad Check Failed for dW: Sum of Error = %.9f" % (err1/count)
+        # check dL separately since dict
+        dL = grad[0]
+        L = self.stack[0]
+        err2 = 0.0
+        count = 0.0
+        print "Checking dL..."
+        for j in dL.iterkeys():
+            for i in xrange(L.shape[0]):
+                L[i,j] += epsilon
+                costP,_ = self.costAndGrad(data)
+                L[i,j] -= epsilon
+                numGrad = (costP - cost)/epsilon
+                err = np.abs(dL[j][i] - numGrad)
+                err2+=err
+                count+=1
+
+        if 0.001 > err2/count:
+            print "Grad Check Passed for dL"
+        else:
