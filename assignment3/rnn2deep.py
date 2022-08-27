@@ -76,3 +76,55 @@ class RNN2:
         # Zero gradients
         self.dW1[:] = 0
         self.db1[:] = 0
+
+        self.dW2[:] = 0
+        self.db2[:] = 0
+
+        self.dWs[:] = 0
+        self.dbs[:] = 0
+        self.dL = collections.defaultdict(self.defaultVec)
+
+        # Forward prop each tree in minibatch
+        for tree in mbdata:
+            c,tot = self.forwardProp(tree.root,correct,guess)
+            cost += c
+            total += tot
+
+        if test:
+            return (1./len(mbdata))*cost,correct, guess, total
+
+        # Back prop each tree in minibatch
+        for tree in mbdata:
+            self.backProp(tree.root)
+
+        # scale cost and grad by mb size
+        scale = (1./self.mbSize)
+        for v in self.dL.itervalues():
+            v *=scale
+
+        # Add L2 Regularization
+        cost += (self.rho/2)*np.sum(self.W1**2)
+        cost += (self.rho/2)*np.sum(self.W2**2)
+        cost += (self.rho/2)*np.sum(self.Ws**2)
+
+        return scale*cost,[self.dL,scale*(self.dW1 + self.rho*self.W1),scale*self.db1,
+                                   scale*(self.dW2 + self.rho*self.W2),scale*self.db2,
+                                   scale*(self.dWs+self.rho*self.Ws),scale*self.dbs]
+
+    def forwardProp(self,node, correct=[], guess=[]):
+        cost  =  total = 0.0
+        # this is exactly the same setup as forwardProp in rnn.py
+
+        #import pdb
+        #pdb.set_trace()
+
+        cost_right = 0
+        cost_left  = 0
+        tot_left   = 0
+        tot_right  = 0
+
+        if node.left != None and node.left.fprop == False:
+            cost_left, tot_left = self.forwardProp(node.left,correct,guess)
+
+        if node.right != None and node.right.fprop == False:
+            cost_right, tot_right = self.forwardProp(node.right,correct,guess)
