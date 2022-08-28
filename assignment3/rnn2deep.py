@@ -236,3 +236,48 @@ class RNN2:
                     costP,_ = self.costAndGrad(data)
                     W[i,j] -= epsilon
                     numGrad = (costP - cost)/epsilon
+                    err = np.abs(dW[i,j] - numGrad)
+                    err1+=err
+                    count+=1
+        if 0.001 > err1/count:
+            print "Grad Check Passed for dW"
+        else:
+            print "Grad Check Failed for dW: Sum of Error = %.9f" % (err1/count)
+        # check dL separately since dict
+        dL = grad[0]
+        L = self.stack[0]
+        err2 = 0.0
+        count = 0.0
+        print "Checking dL..."
+        for j in dL.iterkeys():
+            for i in xrange(L.shape[0]):
+                L[i,j] += epsilon
+                costP,_ = self.costAndGrad(data)
+                L[i,j] -= epsilon
+                numGrad = (costP - cost)/epsilon
+                err = np.abs(dL[j][i] - numGrad)
+                err2+=err
+                count+=1
+
+        if 0.001 > err2/count:
+            print "Grad Check Passed for dL"
+        else:
+            print "Grad Check Failed for dL: Sum of Error = %.9f" % (err2/count)
+
+if __name__ == '__main__':
+
+    import tree as treeM
+    train = treeM.loadTrees()
+    numW = len(treeM.loadWordMap())
+
+    wvecDim = 10
+    middleDim = 10
+    outputDim = 5
+
+    rnn = RNN2(wvecDim,middleDim,outputDim,numW,mbSize=4)
+    rnn.initParams()
+
+    mbData = train[:4]
+
+    print "Numerical gradient check..."
+    rnn.check_grad(mbData)
