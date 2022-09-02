@@ -139,3 +139,57 @@ class RNN3:
         else:
             #ReLU
             node.hActs1 = np.dot(self.W1, np.hstack([node.left.hActs2,node.right.hActs2])) + self.b1 # Here is one of the main changes the prop is from h2 to h1 from the top layer
+            node.hActs1[node.hActs1 < 0] = 0
+
+        #ReLU
+        node.hActs2 = np.dot(self.W2,node.hActs1) + self.b2
+        node.hActs2[node.hActs2 < 0] = 0
+
+        #Softmax layer
+        node.probs = np.dot(self.Ws,node.hActs2) + self.bs
+        node.probs -= np.max(node.probs)
+        node.probs = np.exp(node.probs)
+        node.probs = node.probs / np.sum(node.probs)
+
+        #cost
+        cost -= np.log( node.probs[node.label] )
+
+        correct.append(node.label)
+        guess.append(np.argmax(node.probs))
+        node.fprop = True
+
+        return cost, total + 1
+
+    def backProp(self,node,error=None):
+
+        # Clear nodes
+        node.fprop = False
+
+        deltas = node.probs
+        deltas[node.label] -= 1.0
+        self.dWs += np.outer(deltas,node.hActs2)
+        self.dbs += deltas
+
+        deltas = np.dot(self.Ws.T,deltas)
+
+        if error is not None:
+            deltas += error
+
+        deltas *= (node.hActs2 != 0)
+
+        self.dW2 += np.outer(deltas,node.hActs1)
+        self.db2 += deltas
+
+        deltas = np.dot(self.W2.T,deltas)
+
+        deltas *= (node.hActs1 != 0)
+
+        if node.isLeaf:
+            self.dL[node.word] += deltas
+            return
+        else:
+            self.dW1 += np.outer(deltas,np.hstack([node.left.hActs2,node.right.hActs2]))
+            self.db1 += deltas
+            deltas  = np.dot(self.W1.T,deltas)
+            self.backProp(node.left, deltas[:self.middleDim])
+            self.backProp(node.right,deltas[self.middleDim:])
