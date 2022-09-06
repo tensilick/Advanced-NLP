@@ -193,3 +193,50 @@ class RNN3:
             deltas  = np.dot(self.W1.T,deltas)
             self.backProp(node.left, deltas[:self.middleDim])
             self.backProp(node.right,deltas[self.middleDim:])
+
+    def updateParams(self,scale,update,log=False):
+        """
+        Updates parameters as
+        p := p - scale * update.
+        If log is true, prints root mean square of parameter
+        and update.
+        """
+        if log:
+            for P,dP in zip(self.stack[1:],update[1:]):
+                pRMS = np.sqrt(np.mean(P**2))
+                dpRMS = np.sqrt(np.mean((scale*dP)**2))
+                print "weight rms=%f -- update rms=%f"%(pRMS,dpRMS)
+
+        self.stack[1:] = [P+scale*dP for P,dP in zip(self.stack[1:],update[1:])]
+
+        # handle dictionary update sparsely
+        dL = update[0]
+        for j in dL.iterkeys():
+            self.L[:,j] += scale*dL[j]
+
+    def toFile(self,fid):
+        import cPickle as pickle
+        pickle.dump(self.stack,fid)
+
+    def fromFile(self,fid):
+        import cPickle as pickle
+        self.stack = pickle.load(fid)
+
+    def check_grad(self,data,epsilon=1e-6):
+
+        cost, grad = self.costAndGrad(data)
+
+        err1 = 0.0
+        count = 0.0
+        count_stack = 0
+        print "Checking in the respective order dW1, db1, dW2, db2, dWs, dbs"
+        for W,dW in zip(self.stack[1:],grad[1:]):
+            W = W[...,None] # add dimension since bias is flat
+            dW = dW[...,None]
+            for i in xrange(W.shape[0]):
+                for j in xrange(W.shape[1]):
+                    W[i,j] += epsilon
+                    costP,_ = self.costAndGrad(data)
+                    W[i,j] -= epsilon
+                    numGrad = (costP - cost)/epsilon
+                    err = np.abs(dW[i,j] - numGrad)
