@@ -111,3 +111,49 @@ class RNTN:
         if 0.001 > err1/count:
             print "Grad Check Passed for dW"
         else:
+            print "Grad Check Failed for dW: Sum of Error = %.9f" % (err1/count)
+
+        # check dL separately since dict
+        dL = grad[0]
+        L = self.stack[0]
+        err2 = 0.0
+        count = 0.0
+        print "Checking dL..."
+        for j in dL.iterkeys():
+            for i in xrange(L.shape[0]):
+                L[i,j] += epsilon
+                costP,_ = self.costAndGrad(data)
+                L[i,j] -= epsilon
+                numGrad = (costP - cost)/epsilon
+                err = np.abs(dL[j][i] - numGrad)
+                #print "Analytic %.9f, Numerical %.9f, Relative Error %.9f"%(dL[j][i],numGrad,err)
+                err2+=err
+                count+=1
+
+        if 0.001 > err2/count:
+            print "Grad Check Passed for dL"
+        else:
+            print "Grad Check Failed for dL: Sum of Error = %.9f" % (err2/count)
+
+if __name__ == '__main__':
+
+    import tree as treeM
+    train = treeM.loadTrees()
+    numW = len(treeM.loadWordMap())
+
+    wvecDim = 10
+    outputDim = 5
+
+    nn = RNTN(wvecDim,outputDim,numW,mbSize=4)
+    nn.initParams()
+
+    mbData = train[:1]
+    #cost, grad = nn.costAndGrad(mbData)
+
+    print "Numerical gradient check..."
+    nn.check_grad(mbData)
+
+
+
+
+
