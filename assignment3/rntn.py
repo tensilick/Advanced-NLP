@@ -65,3 +65,49 @@ class RNTN:
         p := p - scale * update.
         If log is true, prints root mean square of parameter
         and update.
+        """
+        if log:
+            for P,dP in zip(self.stack[1:],update[1:]):
+                pRMS = np.sqrt(np.mean(P**2))
+                dpRMS = np.sqrt(np.mean((scale*dP)**2))
+                print "weight rms=%f -- update rms=%f"%(pRMS,dpRMS)
+
+        self.stack[1:] = [P+scale*dP for P,dP in zip(self.stack[1:],update[1:])]
+
+        # handle dictionary update sparsely
+        dL = update[0]
+        for j in dL.iterkeys():
+            self.L[:,j] += scale*dL[j]
+
+    def toFile(self,fid):
+        import cPickle as pickle
+        pickle.dump(self.stack,fid)
+
+    def fromFile(self,fid):
+        import cPickle as pickle
+        self.stack = pickle.load(fid)
+
+    def check_grad(self,data,epsilon=1e-6):
+
+        cost, grad = self.costAndGrad(data)
+        err1 = 0.0
+        count = 0.0
+
+        print "Checking dW... (might take a while)"
+        for W,dW in zip(self.stack[1:],grad[1:]):
+            W = W[...,None,None] # add dimension since bias is flat
+            dW = dW[...,None,None] 
+            for i in xrange(W.shape[0]):
+                for j in xrange(W.shape[1]):
+                    for k in xrange(W.shape[2]):
+                        W[i,j,k] += epsilon
+                        costP,_ = self.costAndGrad(data)
+                        W[i,j,k] -= epsilon
+                        numGrad = (costP - cost)/epsilon
+                        err = np.abs(dW[i,j,k] - numGrad)
+                        #print "Analytic %.9f, Numerical %.9f, Relative Error %.9f"%(dW[i,j,k],numGrad,err)
+                        err1+=err
+                        count+=1
+        if 0.001 > err1/count:
+            print "Grad Check Passed for dW"
+        else:
