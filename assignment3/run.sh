@@ -3,4 +3,7 @@
 # verbose
 set -x
 ###################
-# U
+# Update items below for each train/test
+###################
+
+# trai
