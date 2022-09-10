@@ -13,4 +13,6 @@ step=1e-2
 # for RNN2 only, otherwise doesnt matter
 middleDim=30
 
-model="
+model="RNN" #either RNN, RNN2, RNN3, RNTN, or DCNN
+
+#missing 5
