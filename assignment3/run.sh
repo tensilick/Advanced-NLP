@@ -10,4 +10,7 @@ set -x
 epochs=30
 step=1e-2
 
-# for RNN2 only, o
+# for RNN2 only, otherwise doesnt matter
+middleDim=30
+
+model="
