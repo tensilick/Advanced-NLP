@@ -15,4 +15,5 @@ middleDim=30
 
 model="RNN" #either RNN, RNN2, RNN3, RNTN, or DCNN
 
-#missing 5
+#missing 5 on purpose, already ran
+wvecDimBatch=("5" "15" "25" "30" "35" 
