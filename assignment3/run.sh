@@ -21,4 +21,5 @@ wvecDimBatch=("5" "15" "25" "30" "35" "45")
 for wvecDim in "${wvecDimBatch[@]}"
 do
 ########################################################
-# Probably a go
+# Probably a good idea to let items below here be
+##################
