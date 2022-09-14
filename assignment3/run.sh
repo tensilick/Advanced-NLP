@@ -23,4 +23,5 @@ do
 ########################################################
 # Probably a good idea to let items below here be
 ########################################################
-if [ "$model" ==
+if [ "$model" == "RNN2" ]; then
+    outfile="models/${model}_wvec
