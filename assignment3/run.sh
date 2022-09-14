@@ -22,4 +22,5 @@ for wvecDim in "${wvecDimBatch[@]}"
 do
 ########################################################
 # Probably a good idea to let items below here be
-##################
+########################################################
+if [ "$model" ==
