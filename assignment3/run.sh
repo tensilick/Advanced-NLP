@@ -24,4 +24,6 @@ do
 # Probably a good idea to let items below here be
 ########################################################
 if [ "$model" == "RNN2" ]; then
-    outfile="models/${model}_wvecDim_${wvecDim}_middleDim_${middleDim}_step_${ste
+    outfile="models/${model}_wvecDim_${wvecDim}_middleDim_${middleDim}_step_${step}_2.bin"
+else
+    outfile="models/${model}_w
