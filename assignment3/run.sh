@@ -31,3 +31,6 @@ fi
 
 
 echo $outfile
+
+
+python runNNet.py --step $step --epochs $epochs --
