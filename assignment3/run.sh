@@ -34,4 +34,5 @@ echo $outfile
 
 
 python runNNet.py --step $step --epochs $epochs --outFile $outfile \
-                --middleDim $midd
+                --middleDim $middleDim --outputDim 5 --wvecDim $wvecDim --model $model
+d
