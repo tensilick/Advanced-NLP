@@ -33,4 +33,5 @@ fi
 echo $outfile
 
 
-python runNNet.py --step $step --epochs $epochs --
+python runNNet.py --step $step --epochs $epochs --outFile $outfile \
+                --middleDim $midd
