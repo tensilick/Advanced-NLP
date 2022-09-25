@@ -92,3 +92,52 @@ def run(args=None):
         trees = cnn.tree2matrix(trees)
     else:
         raise '%s is not a valid neural network so far only RNTN, RNN, RNN2, RNN3, and DCNN'%opts.model
+
+    nn.initParams()
+
+    sgd = optimizer.SGD(nn,alpha=opts.step,minibatch=opts.minibatch,
+        optimizer=opts.optimizer)
+
+    # assuring folder for plots exists
+    if( os.path.isdir('plots') == False ): os.makedirs('test')
+    if( os.path.isdir('plots/' + opts.model ) == False ): os.makedirs('plots/' + opts.model)
+
+    dev_trees = tr.loadTrees("dev")
+    for e in range(opts.epochs):
+        start = time.time()
+        print "Running epoch %d"%e
+        sgd.run(trees)
+        end = time.time()
+        print "Time per epoch : %f"%(end-start)
+
+        with open(opts.outFile,'w') as fid:
+            pickle.dump(opts,fid)
+            pickle.dump(sgd.costt,fid)
+            nn.toFile(fid)
+        if evaluate_accuracy_while_training:
+            print "testing on training set real quick"
+            train_accuracies.append(test(opts.outFile,"train",opts.model,trees))
+            print "testing on dev set real quick"
+            dev_accuracies.append(test(opts.outFile,"dev",opts.model,dev_trees))
+            # clear the fprop flags in trees and dev_trees
+            for tree in trees:
+                tr.leftTraverse(tree.root,nodeFn=tr.clearFprop)
+            for tree in dev_trees:
+                tr.leftTraverse(tree.root,nodeFn=tr.clearFprop)
+            print "fprop in trees cleared"
+
+
+    if evaluate_accuracy_while_training:
+        #pdb.set_trace()
+
+        plt.figure()
+        #Lets set up the plot
+        plt.title('Accuracy in set per epochs')
+        plt.plot(range(opts.epochs),train_accuracies,label='train')
+        plt.plot(range(opts.epochs),dev_accuracies,label='dev')
+
+        with open('dev_accu' + opts.model,'a') as fid:
+            fid.write(str(opts.wvecDim) + ',' + str(opts.middleDim) + ',' + str(dev_accuracies[-1]) + ';')
+
+        #plt.axis([0,opts.epochs,0,1])
+        plt.xlabel('epochs')
