@@ -141,3 +141,61 @@ def run(args=None):
 
         #plt.axis([0,opts.epochs,0,1])
         plt.xlabel('epochs')
+        plt.ylabel('accuracy')
+        plt.legend(loc=2, borderaxespad=0.)
+
+        #always save with middleDim, even if it's a one-layer RNN
+        plt.savefig('plots/' + opts.model + '/accuracy_wvec_' + str(opts.wvecDim) + '_middleDim_' + str(opts.middleDim) + ' .png')
+
+        print 'image saved at %s' % os.getcwd()
+
+
+def test(netFile,dataSet, model='RNN', trees=None):
+    if trees==None:
+        trees = tr.loadTrees(dataSet)
+    assert netFile is not None, "Must give model to test"
+    print "Testing netFile %s"%netFile
+    opts = None
+    with open(netFile,'r') as fid:
+        opts = pickle.load(fid)
+        _ = pickle.load(fid)
+
+        if (model=='RNTN'):
+            nn = RNTN(opts.wvecDim,opts.outputDim,opts.numWords,opts.minibatch)
+        elif(model=='RNN'):
+            nn = RNN(opts.wvecDim,opts.outputDim,opts.numWords,opts.minibatch)
+        elif(model=='RNN2'):
+            nn = RNN2(opts.wvecDim,opts.middleDim,opts.outputDim,opts.numWords,opts.minibatch)
+        elif(opts.model=='RNN3'):
+            nn = RNN3(opts.wvecDim,opts.middleDim,opts.outputDim,opts.numWords,opts.minibatch)
+        elif(model=='DCNN'):
+            nn = DCNN(opts.wvecDim,opts.ktop,opts.m1,opts.m2, opts.n1, opts.n2,0, opts.outputDim,opts.numWords, 2, opts.minibatch,rho=1e-4)
+            trees = cnn.tree2matrix(trees)
+        else:
+            raise '%s is not a valid neural network so far only RNTN, RNN, RNN2, RNN3, and DCNN'%opts.model
+
+        nn.initParams()
+        nn.fromFile(fid)
+
+    print "Testing %s..."%model
+
+    cost,correct, guess, total = nn.costAndGrad(trees,test=True)
+
+    correct_sum = 0
+    for i in xrange(0,len(correct)):
+        correct_sum+=(guess[i]==correct[i])
+
+    cm = confusion_matrix(correct, guess)
+    makeconf(cm)
+    plt.savefig("plots/" + opts.model + "/confusion_matrix_" + model + "wvecDim_" + str(opts.wvecDim) + "_middleDim_" + str(opts.middleDim) + ".png")
+
+    print "Cost %f, Acc %f"%(cost,correct_sum/float(total))
+    return correct_sum/float(total)
+
+
+def makeconf(conf_arr):
+    # makes a confusion matrix plot when provided a matrix conf_arr
+    norm_conf = []
+    for i in conf_arr:
+        a = 0
+        tmp_arr = []
