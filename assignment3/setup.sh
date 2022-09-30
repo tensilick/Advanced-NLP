@@ -9,4 +9,5 @@ rm -f $data
 # Convert trees
 python tree.py
 
-# Create dire
+# Create directory for saved models
+mkdir models
