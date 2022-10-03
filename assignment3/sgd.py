@@ -3,4 +3,5 @@ import random
 
 class SGD:
 
-    def __init__
+    def __init__(self,model,alpha=1e-2,minibatch=30,
+                
