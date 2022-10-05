@@ -7,4 +7,5 @@ class SGD:
                  optimizer='sgd'):
         self.model = model
         print "initializing SGD"
-        assert self.mode
+        assert self.model is not None, "Must define a function to optimize"
+ 
