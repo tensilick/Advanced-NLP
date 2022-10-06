@@ -9,4 +9,5 @@ class SGD:
         print "initializing SGD"
         assert self.model is not None, "Must define a function to optimize"
         self.it = 0
-        self.alpha
+        self.alpha = alpha # learning rate
+        self.minibatch
