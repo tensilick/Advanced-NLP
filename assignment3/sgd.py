@@ -14,4 +14,5 @@ class SGD:
         self.optimizer = optimizer
         if self.optimizer == 'sgd':
             print "Using sgd.."
-        elif self.optimizer == '
+        elif self.optimizer == 'adagrad':
+            print "Using adagrad..
