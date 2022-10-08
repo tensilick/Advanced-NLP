@@ -11,4 +11,6 @@ class SGD:
         self.it = 0
         self.alpha = alpha # learning rate
         self.minibatch = minibatch # minibatch
-        self.optimizer = optim
+        self.optimizer = optimizer
+        if self.optimizer == 'sgd':
+   
