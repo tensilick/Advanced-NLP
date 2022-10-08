@@ -10,4 +10,5 @@ class SGD:
         assert self.model is not None, "Must define a function to optimize"
         self.it = 0
         self.alpha = alpha # learning rate
-        self.minibatch
+        self.minibatch = minibatch # minibatch
+        self.optimizer = optim
