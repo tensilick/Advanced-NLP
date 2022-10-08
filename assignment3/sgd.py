@@ -13,4 +13,5 @@ class SGD:
         self.minibatch = minibatch # minibatch
         self.optimizer = optimizer
         if self.optimizer == 'sgd':
-   
+            print "Using sgd.."
+        elif self.optimizer == '
