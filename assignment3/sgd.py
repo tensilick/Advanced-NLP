@@ -19,4 +19,7 @@ class SGD:
             epsilon = 1e-8
             self.gradt = [epsilon + np.zeros(W.shape) for W in self.model.stack]
         else:
-            raise ValueError("In
+            raise ValueError("Invalid optimizer")
+
+        self.costt = []
+      
