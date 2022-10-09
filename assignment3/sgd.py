@@ -17,4 +17,4 @@ class SGD:
         elif self.optimizer == 'adagrad':
             print "Using adagrad..."
             epsilon = 1e-8
-            self.g
+            self.gradt = [epsilon + np.zeros(W.shape) for W in self.model.stac
