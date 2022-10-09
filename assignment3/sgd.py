@@ -15,4 +15,6 @@ class SGD:
         if self.optimizer == 'sgd':
             print "Using sgd.."
         elif self.optimizer == 'adagrad':
-            print "Using adagrad..
+            print "Using adagrad..."
+            epsilon = 1e-8
+            self.g
