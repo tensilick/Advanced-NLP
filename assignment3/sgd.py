@@ -22,4 +22,7 @@ class SGD:
             raise ValueError("Invalid optimizer")
 
         self.costt = []
-      
+        self.expcost = []
+
+    def run(self,trees):
+     
