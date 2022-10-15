@@ -25,4 +25,5 @@ class SGD:
         self.expcost = []
 
     def run(self,trees):
-     
+        """
+        Runs stochastic gradient descent w
