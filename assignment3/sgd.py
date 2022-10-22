@@ -26,4 +26,6 @@ class SGD:
 
     def run(self,trees):
         """
-        Runs stochastic gradient descent w
+        Runs stochastic gradient descent with model as objective.
+        """
+        print "runn
