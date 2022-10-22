@@ -28,4 +28,8 @@ class SGD:
         """
         Runs stochastic gradient descent with model as objective.
         """
-        print "runn
+        print "running SGD"
+        
+        m = len(trees)
+
+        # rando
