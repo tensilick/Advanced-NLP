@@ -32,4 +32,7 @@ class SGD:
         
         m = len(trees)
 
-        # rando
+        # randomly shuffle data
+        random.shuffle(trees)
+
+   
