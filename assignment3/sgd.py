@@ -35,4 +35,4 @@ class SGD:
         # randomly shuffle data
         random.shuffle(trees)
 
-   
+        for i in xrange(0,m-self.minibatch+1,self.minibatch
