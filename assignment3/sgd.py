@@ -38,4 +38,6 @@ class SGD:
         for i in xrange(0,m-self.minibatch+1,self.minibatch):
             self.it += 1
 
-            mb_data = trees[i:i
+            mb_data = trees[i:i+self.minibatch]
+               
+      
