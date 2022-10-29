@@ -42,4 +42,5 @@ class SGD:
                
             cost,grad = self.model.costAndGrad(mb_data)
 
-            # 
+            # compute exponentially weighted cost
+            if n
