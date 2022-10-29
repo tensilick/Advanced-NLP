@@ -40,4 +40,6 @@ class SGD:
 
             mb_data = trees[i:i+self.minibatch]
                
-      
+            cost,grad = self.model.costAndGrad(mb_data)
+
+            # 
