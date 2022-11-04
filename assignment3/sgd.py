@@ -45,4 +45,6 @@ class SGD:
             # compute exponentially weighted cost
             if np.isfinite(cost):
                 if self.it > 1:
-                    self.expcost.append(.01*cost 
+                    self.expcost.append(.01*cost + .99*self.expcost[-1])
+                else:
+               
