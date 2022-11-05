@@ -47,4 +47,6 @@ class SGD:
                 if self.it > 1:
                     self.expcost.append(.01*cost + .99*self.expcost[-1])
                 else:
-               
+                    self.expcost.append(cost)
+
+            if 
