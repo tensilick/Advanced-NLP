@@ -49,4 +49,5 @@ class SGD:
                 else:
                     self.expcost.append(cost)
 
-            if 
+            if self.optimizer == 'sgd':
+                updat
