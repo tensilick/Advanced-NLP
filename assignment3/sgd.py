@@ -50,4 +50,7 @@ class SGD:
                     self.expcost.append(cost)
 
             if self.optimizer == 'sgd':
-                updat
+                update = grad
+                scale = -self.alpha
+
+            eli
