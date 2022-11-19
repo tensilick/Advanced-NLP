@@ -56,4 +56,5 @@ class SGD:
             elif self.optimizer == 'adagrad':
                 # trace = trace+grad.^2
                 self.gradt[1:] = [gt+g**2 
-                        for gt,g in zip(sel
+                        for gt,g in zip(self.gradt[1:],grad[1:])]
+                # update = grad.*trace.^(-1/2)
