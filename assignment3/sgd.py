@@ -54,4 +54,5 @@ class SGD:
                 scale = -self.alpha
 
             elif self.optimizer == 'adagrad':
-                
+                # trace = trace+grad.^2
+                self.gradt[1:] =
