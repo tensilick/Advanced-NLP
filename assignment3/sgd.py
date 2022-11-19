@@ -58,3 +58,4 @@ class SGD:
                 self.gradt[1:] = [gt+g**2 
                         for gt,g in zip(self.gradt[1:],grad[1:])]
                 # update = grad.*trace.^(-1/2)
+                update =  [g*(1./np.sqrt(gt))
