@@ -53,4 +53,5 @@ class SGD:
                 update = grad
                 scale = -self.alpha
 
-            eli
+            elif self.optimizer == 'adagrad':
+                
