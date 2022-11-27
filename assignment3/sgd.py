@@ -62,3 +62,5 @@ class SGD:
                         for gt,g in zip(self.gradt[1:],grad[1:])]
                 # handle dictionary separately
                 dL = grad[0]
+                dLt = self.gradt[0]
+                
