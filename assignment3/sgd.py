@@ -64,4 +64,5 @@ class SGD:
                 dL = grad[0]
                 dLt = self.gradt[0]
                 for j in dL.iterkeys():
-                    d
+                    dLt[:,j] = dLt[:,j] + dL[j]**2
+            
