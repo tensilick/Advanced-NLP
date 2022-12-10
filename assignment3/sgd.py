@@ -68,3 +68,7 @@ class SGD:
                     dL[j] = dL[j] * (1./np.sqrt(dLt[:,j]))
                 update = [dL] + update
                 scale = -self.alpha
+
+
+            # update params
+    
