@@ -63,4 +63,5 @@ class SGD:
                 # handle dictionary separately
                 dL = grad[0]
                 dLt = self.gradt[0]
-                
+                for j in dL.iterkeys():
+                    d
