@@ -65,4 +65,5 @@ class SGD:
                 dLt = self.gradt[0]
                 for j in dL.iterkeys():
                     dLt[:,j] = dLt[:,j] + dL[j]**2
-            
+                    dL[j] = dL[j] * (1./np.sqrt(dLt[:,j]))
+                update =
