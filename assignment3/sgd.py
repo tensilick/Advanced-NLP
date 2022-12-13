@@ -71,4 +71,4 @@ class SGD:
 
 
             # update params
-    
+            self.model.updateParams(scale,update,log=F
