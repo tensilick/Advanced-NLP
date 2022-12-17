@@ -74,4 +74,5 @@ class SGD:
             self.model.updateParams(scale,update,log=False)
 
             self.costt.append(cost)
-            if self.i
+            if self.it%1 == 0:
+                print "Iter %d : Cost=%.4f, ExpCos
