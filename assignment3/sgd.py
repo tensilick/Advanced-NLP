@@ -71,4 +71,7 @@ class SGD:
 
 
             # update params
-            self.model.updateParams(scale,update,log=F
+            self.model.updateParams(scale,update,log=False)
+
+            self.costt.append(cost)
+            if self.i
