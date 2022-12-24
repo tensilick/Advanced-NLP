@@ -76,4 +76,4 @@ class SGD:
             self.costt.append(cost)
             if self.it%1 == 0:
                 print "Iter %d : Cost=%.4f, ExpCost=%.4f."%(self.it,cost,self.expcost[-1])
-    
+            
