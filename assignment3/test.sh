@@ -10,4 +10,4 @@ model="RNN" # the neural network type
 echo $infile
 
 # test the model on test data
-#python run
+#python runNNet.py --inFile $infile --test --data "test" --model $m
