@@ -13,4 +13,6 @@ echo $infile
 #python runNNet.py --inFile $infile --test --data "test" --model $model
 
 # test the model on dev data
-python ru
+python runNNet.py --inFile $infile --test --data "dev" --model $model
+
+# tes
