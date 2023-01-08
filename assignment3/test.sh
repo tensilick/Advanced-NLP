@@ -15,4 +15,5 @@ echo $infile
 # test the model on dev data
 python runNNet.py --inFile $infile --test --data "dev" --model $model
 
-# tes
+# test the model on training data
+#python runNNet.p
