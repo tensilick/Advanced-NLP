@@ -49,3 +49,59 @@ class Tree:
             split += 1
 
         # New node
+        node = Node(int(tokens[1])) # zero index labels
+
+        node.parent = parent 
+
+        # leaf Node
+        if countOpen == 0:
+            node.word = ''.join(tokens[2:-1]).lower() # lower case?
+            node.isLeaf = True
+            return node
+
+        node.left = self.parse(tokens[2:split],parent=node)
+        node.right = self.parse(tokens[split:-1],parent=node)
+
+        return node
+
+        
+
+def leftTraverse(root,nodeFn=None,args=None):
+    """
+    Recursive function traverses tree
+    from left to right. 
+    Calls nodeFn at each node
+    """
+    nodeFn(root,args)
+    if root.left is not None:
+        leftTraverse(root.left,nodeFn,args)
+    if root.right is not None:
+        leftTraverse(root.right,nodeFn,args)
+
+
+def countWords(node,words):
+    if node.isLeaf:
+        words[node.word] += 1
+
+def clearFprop(node,words):
+    node.fprop = False
+
+def mapWords(node,wordMap):
+    if node.isLeaf:
+        if node.word not in wordMap:
+            node.word = wordMap[UNK]
+        else:
+            node.word = wordMap[node.word]
+    
+
+def loadWordMap():
+    import cPickle as pickle
+    
+    with open('wordMap.bin','r') as fid:
+        return pickle.load(fid)
+
+def buildWordMap():
+    """
+    Builds map of all words in training set
+    to integer values.
+    """
