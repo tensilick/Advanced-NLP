@@ -105,3 +105,42 @@ def buildWordMap():
     Builds map of all words in training set
     to integer values.
     """
+
+    import cPickle as pickle
+    file = 'trees/train.txt'
+    print "Reading trees to build word map.."
+    with open(file,'r') as fid:
+        trees = [Tree(l) for l in fid.readlines()]
+
+    print "Counting words to give each word an index.."
+    
+    words = collections.defaultdict(int)
+    for tree in trees:
+        leftTraverse(tree.root,nodeFn=countWords,args=words)
+    
+    wordMap = dict(zip(words.iterkeys(),xrange(len(words))))
+    wordMap[UNK] = len(words) # Add unknown as word
+    
+    print "Saving wordMap to wordMap.bin"
+    with open('wordMap.bin','w') as fid:
+        pickle.dump(wordMap,fid)
+
+def loadTrees(dataSet='train'):
+    """
+    Loads training trees. Maps leaf node words to word ids.
+    """
+    wordMap = loadWordMap()
+    file = 'trees/%s.txt'%dataSet
+    print "Loading %sing trees.."%dataSet
+    with open(file,'r') as fid:
+        trees = [Tree(l) for l in fid.readlines()]
+    for tree in trees:
+        leftTraverse(tree.root,nodeFn=mapWords,args=wordMap)
+    return trees
+      
+if __name__=='__main__':
+    buildWordMap()
+    
+    train = loadTrees()
+
+    print "Now you can do something with this list of trees!"
