@@ -2,4 +2,4 @@
 
 Hello!
 
-You are probably here seeking u
+You are probably here seeking understanding in the realm of Deep Learning applied to Natural Lang
