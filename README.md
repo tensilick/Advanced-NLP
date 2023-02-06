@@ -6,4 +6,7 @@ You are probably here seeking understanding in the realm of Deep Learning applie
 
 Here are some of the results obtained from the third assignment:
 
-**
+**One-Layer RNN:**
+
+* wvecDim = 5 : 0.740343088764;
+* w
