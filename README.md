@@ -10,4 +10,6 @@ Here are some of the results obtained from the third assignment:
 
 * wvecDim = 5 : 0.740343088764;
 * wvecDim = 15: 0.766135064058;
-* wvecDim = 25: 0.
+* wvecDim = 25: 0.793929596835;
+* wvecDim = 30: 0.796149299105;
+* wvecDim = 
