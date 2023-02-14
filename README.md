@@ -12,4 +12,5 @@ Here are some of the results obtained from the third assignment:
 * wvecDim = 15: 0.766135064058;
 * wvecDim = 25: 0.793929596835;
 * wvecDim = 30: 0.796149299105;
-* wvecDim = 
+* wvecDim = 35: 0.801746809178;
+* wvecDim = 45: 0.801505537192;
