@@ -14,3 +14,7 @@ Here are some of the results obtained from the third assignment:
 * wvecDim = 30: 0.796149299105;
 * wvecDim = 35: 0.801746809178;
 * wvecDim = 45: 0.801505537192;
+
+**Two-Layer RNN (deep RNN2):**
+
+* wvecDim = 30, mi
