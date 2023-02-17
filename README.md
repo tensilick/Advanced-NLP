@@ -17,4 +17,5 @@ Here are some of the results obtained from the third assignment:
 
 **Two-Layer RNN (deep RNN2):**
 
-* wvecDim = 30, mi
+* wvecDim = 30, middleDim = 5 : 0.733490964364;
+* wvecDim = 30, middleDim = 
