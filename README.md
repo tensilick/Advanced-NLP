@@ -20,4 +20,5 @@ Here are some of the results obtained from the third assignment:
 * wvecDim = 30, middleDim = 5 : 0.733490964364;
 * wvecDim = 30, middleDim = 15: 0.765435375299;
 * wvecDim = 30, middleDim = 25: 0.773421478032;
-* wvecDim = 30, middleDim = 30: 0.7684754023
+* wvecDim = 30, middleDim = 30: 0.768475402321;
+* wvecDim = 30, middleDim = 35: 0.790937824
